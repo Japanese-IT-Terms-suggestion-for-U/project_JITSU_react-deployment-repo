@@ -6,9 +6,8 @@ import Login from "./pages/login";
 const Router: React.FC = () => {
   return (
     <Routes>
-      {/* <Route path="/" element={<MainPage />} /> */}
-      <Route path="/" element={<Login />} />
-      {/* <Route path="/login" element={<Login />} /> */}
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   );
 };
