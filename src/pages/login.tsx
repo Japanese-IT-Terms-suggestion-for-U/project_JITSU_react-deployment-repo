@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import GoogleLoginButton from "../components/layout/googleLoginButton";
 import { GoogleLoginResponse } from "react-google-login";
+import jitsu_logo from "../assets/jitsu_logo.jpeg";
 
 const Login: React.FC = () => {
   const responseGoogleSuccess = (response: GoogleLoginResponse) => {
@@ -30,12 +31,7 @@ const Login: React.FC = () => {
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
               {/* FIXME: 로고 삽입 */}
-              <img
-                src="https://www.logo.wine/a/logo/Instagram/Instagram-Glyph-Color-Logo.wine.svg"
-                width="150"
-                alt=""
-                srcSet=""
-              />
+              <img src={jitsu_logo} width="150" alt="" srcSet="" />
               <h1 className="mb-2 text-2xl">JITSU</h1>
               <span className="text-gray-300">개발 단어 학습을 간편하게</span>
             </div>
