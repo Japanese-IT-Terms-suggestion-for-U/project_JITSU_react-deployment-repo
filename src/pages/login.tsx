@@ -25,10 +25,27 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <GoogleLoginButton
-        onSuccess={responseGoogleSuccess}
-        onFailure={responseGoogleFailure}
-      />
+      <div className="flex h-screen w-full items-center justify-center bg-cover bg-no-repeat">
+        <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+          <div className="text-white">
+            <div className="mb-8 flex flex-col items-center">
+              {/* FIXME: 로고 삽입 */}
+              <img
+                src="https://www.logo.wine/a/logo/Instagram/Instagram-Glyph-Color-Logo.wine.svg"
+                width="150"
+                alt=""
+                srcSet=""
+              />
+              <h1 className="mb-2 text-2xl">JITSU</h1>
+              <span className="text-gray-300">개발 단어 학습을 간편하게</span>
+            </div>
+            <GoogleLoginButton
+              onSuccess={responseGoogleSuccess}
+              onFailure={responseGoogleFailure}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
