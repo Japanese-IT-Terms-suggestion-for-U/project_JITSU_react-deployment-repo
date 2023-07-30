@@ -1,6 +1,9 @@
-# JITSU
+# 🏯 [JITSU]()
+> Japanese It Terms suggestion for U
 
-`勉強したい分野の単語を学習できるようにランダムで出せるサービス`を提供します.
+<div align="center" style="display:flex;">
+    <img src="/profile/jitsu_logo.jpeg" width="100" alt="logo"/>
+</div>
 
 ## 目次
 
