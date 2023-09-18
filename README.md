@@ -5,44 +5,55 @@
     <img src="/frontend/public/jitsu_logo.jpeg" width="100" alt="logo"/>
 </div>
 
-## 目次
-
-[目次](#目次) <br>
-[はじめに](#はじめに) <br>
-[クロールするサイト](#クロールするサイト) <br>
-[技術スタック](#技術スタック) <br>
-[機能](#機能) <br>
-[使用方法](#使用方法) <br>
-[ライセンス](#ライセンス)
-
-## はじめに
-
-`勉強したい分野の単語を学習できるようにランダムで出せるサービス`を提供します. <br>
+# 1. サービス紹介
+> このページは'勉強したい分野の単語を学習できるようにランダムで出せるサービス、JITSU'に関する全体的な情報を提供します。  
 ユーザーの傾向に合った単語を学習することができます。
 
-## クロールするサイト
+---
+<br>
 
-[분野別用語辞典 ソフトウェア： - IT用語辞典バイナリ](https://www.sophia-it.com/word-category/ソフトウェア)
+# 2. 気にしていたとこ
 
-## 技術スタック
+---
+<br>
 
+# 3. 機能
+1. **ログイン・会員登録**
+    - ログイン・会員登録の詳細な仕様と使用方法
+2. **マイページ**
+    - マイページの詳細な仕様과 사용 방법
+3. **単語カード**
+    - 単語カード의 상세 스펙과 사용 방법
+  
+---
+<br>
+
+# 4. プロジェクト構造
+
+---
+<br>
+
+# 5. 技術スタック
+
+### フロントエンド
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+
+### バックエンド
 ![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-## 機能
+### 配布
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+> +AWS EC2
+> AWS S3
 
-1. **ログイン・会員登録**
-2. **マイページ**
-3. **単語カード**
-
-## 使用方法
-
-1. **ログイン・会員登録を行います。**
-2. **学習したいテーマを選びます。**
-3. **単語学習を始めます。**
-4. **分析できたデータはマイページで確認できます。**
-
-## ライセンス
-
-프로젝트 라이센스 정보
+### コラボレーションツール
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
