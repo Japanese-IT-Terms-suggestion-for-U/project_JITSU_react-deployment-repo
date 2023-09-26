@@ -2,7 +2,7 @@
 > Japanese It Terms suggestion for U
 
 <div align="center" style="display:flex;">
-    <img src="/frontend/public/jitsu_logo.jpeg" width="100" alt="logo"/>
+    <img src="/frontend/public/jitsu_logo.png" width="100" alt="logo"/>
 </div>
 
 # 1. サービス紹介
