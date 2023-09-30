@@ -1,7 +1,7 @@
 import { ClientSafeProvider, getProviders, signIn } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../[...nextauth]/route";
-import SocialSigninButton from "../../../components/SocialSigninButton";
+import SocialSigninButton from "../../../components/Sign/SocialSigninButton";
 
 type IProps = {
   providers: Record<string, ClientSafeProvider>;
