@@ -1,19 +1,27 @@
 name: Deploy to cloudtype
+# mainブランチにpushが発生するたびに実行
 on:
   push:
     branches:
       - main
+# ワークフローで実行されるタスクの定義
 jobs:
   deploy:
+    # 最新バージョンのUbuntuに基づいてタスクを実行
     runs-on: ubuntu-latest
     steps:
+      # 最初のステップ: GitHubリポジトリをチェックアウトする
       - name: Checkout
         uses: actions/checkout@v2
+
+      # 第二段階：cloudtypeに接続する。GitHub トークンと cloudtype トークンが必要
       - name: Connect deploy key
         uses: cloudtype-github-actions/connect@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           ghtoken: ${{ secrets.GHP_TOKEN }}
+
+      # 第三段階: cloudtypeにデプロイ。cloudtypeトークン、プロジェクト名、ステージ名、yaml設定が必要。
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
         with:
@@ -21,17 +29,25 @@ jobs:
           project: gimyumin40/jitsu
           stage: main
           yaml: |
+            # アプリ名の設定
             name: project-jitsu-deployment-repo
+            # アプリタイプ設定
             app: php
+            # 追加オプション設定
             options:
+              # ポート設定
               ports: 9000
+              # 文書のデフォルトパス設定
               docbase: /public
+              # Node.jsの使用有無の設定
               nodejs: true
+              # 環境変数設定
               env:
                 - name: APP_KEY
                   value: base64:g0PmlgtiDlxx+yYySTRZnjccq4/bxJqPcHUl/uLbQRU=
                 - name: LOG_CHANNEL
                   value: errorlog
+            # 配布するGitHubリポジトリ情報を設定
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
