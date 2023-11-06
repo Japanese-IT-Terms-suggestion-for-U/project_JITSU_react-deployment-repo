@@ -1,4 +1,4 @@
-# 🏯 [JITSU]()
+# 🏯 [JITSU](https://port-9000-project-jitsu-deployment-repo-jvpb2mlogpt1ym.sel5.cloudtype.app/)
 > Japanese It Terms suggestion for U
 
 <div align="center" style="display:flex;">
