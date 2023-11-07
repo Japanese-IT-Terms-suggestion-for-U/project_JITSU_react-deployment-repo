@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('words', function (Blueprint $table) {
             $table->integer('word_number')->primary();
-            $table->string('japanese', 20);
-            $table->string('korean', 20);
-            $table->string('korean_definition', 255);
+            $table->text('japanese');
+            $table->text('korean');
+            $table->text('korean_definition')->nullable();
             $table->string('tag', 20);
         });
     }
