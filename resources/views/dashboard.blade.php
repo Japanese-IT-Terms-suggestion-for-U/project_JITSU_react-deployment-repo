@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg flex flex-col items-center justify-center">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{-- Card Component --}}
-                    <x-card />
+                    <x-card :word="$word" />
                 </div>
             </div>
         </div>
