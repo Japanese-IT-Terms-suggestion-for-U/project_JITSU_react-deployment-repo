@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [WordController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+Route::get('/random-word', [WordController::class, 'random']);
 
 Route::get('/board', function () {
     return view('board');
