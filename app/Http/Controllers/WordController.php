@@ -34,4 +34,10 @@ class WordController extends Controller
         $word = Word::first();
         return view('dashboard', ['word' => $word]);
     }
+
+    public function random()
+    {
+        $word = Word::inRandomOrder()->first();
+        return response()->json($word);
+    }
 }
