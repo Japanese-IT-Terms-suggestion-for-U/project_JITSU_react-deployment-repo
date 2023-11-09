@@ -20,7 +20,7 @@
                 <!-- 掲示板 Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('board')" :active="request()->routeIs('board')">
-                        {{ __('掲示板') }}
+                        {{ __('コミュニティ') }}
                     </x-nav-link>
                 </div>
             </div>
