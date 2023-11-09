@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('user_words', function (Blueprint $table) {
-            $table->integer('user_words_id')->primary();
+            $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->integer('word_number');
             $table->boolean('is_favorite');
