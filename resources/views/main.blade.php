@@ -13,7 +13,7 @@
         </style>
     </head>
     {{-- Header --}}
-    <x-header />
+    @include('layouts.navigation')
 
     {{-- Body --}}
     <x-main-body />
