@@ -1,4 +1,4 @@
-<section>
+<section class="bg-white p-4 rounded-lg shadow">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('プロフィール情報') }}
@@ -19,16 +19,16 @@
 
         <div>
             <x-input-label for="name" :value="__('お名前')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', Auth::user()->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('メール')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', Auth::user()->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+            @if (Auth::user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! Auth::user()->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                         {{ __('Your email address is unverified.') }}
@@ -49,6 +49,11 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('更新') }}</x-primary-button>
+            <x-danger-button
+                x-data=""
+                x-on:click.prevent="window.modal.closeModal()"
+            >{{ __('Close') }}
+            </x-danger-button>
 
             @if (session('status') === 'profile-updated')
                 <p

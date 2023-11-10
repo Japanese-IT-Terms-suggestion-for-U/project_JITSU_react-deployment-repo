@@ -1,4 +1,4 @@
-<section>
+<section class="bg-white p-4 rounded-lg shadow">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('パスワードの更新') }}
@@ -33,6 +33,11 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('更新') }}</x-primary-button>
+            <x-danger-button
+                x-data=""
+                x-on:click.prevent="window.modal.closeModal()"
+            >{{ __('Close') }}
+            </x-danger-button>
 
             @if (session('status') === 'password-updated')
                 <p
