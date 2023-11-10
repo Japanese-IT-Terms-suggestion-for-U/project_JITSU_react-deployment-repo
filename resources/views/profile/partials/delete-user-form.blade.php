@@ -1,4 +1,4 @@
-<section class="space-y-6">
+<section class="space-y-6 bg-white p-4 rounded-lg shadow">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('アカウント削除') }}
@@ -13,6 +13,11 @@
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
     >{{ __('削除') }}</x-danger-button>
+
+    <x-danger-button
+        x-data=""
+        x-on:click.prevent="window.modal.closeModal()"
+    >{{ __('Close') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
