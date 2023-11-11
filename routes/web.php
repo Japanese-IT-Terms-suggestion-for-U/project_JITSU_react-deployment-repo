@@ -5,35 +5,21 @@ use App\Http\Controllers\UserWordController;
 use App\Http\Controllers\WordController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
     return view('main');
 })->name('main');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/dashboard', [WordController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-Route::get('/random-word', [WordController::class, 'random']);
-
-Route::get('/board', function () {
-    return view('board');
-})->middleware(['auth', 'verified'])->name('board');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [WordController::class, 'index'])
+        ->name('dashboard');
+    Route::get('/board', function () {
+        return view('board');
+    })->name('board');
+});
 
 Route::middleware('auth')->group(function () {
+    Route::get('/random-word', [WordController::class, 'random']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])
@@ -42,8 +28,17 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 
     Route::patch('/user-words/{word}', [UserWordController::class, 'update'])
-        ->middleware('auth')
         ->name('user-words.update');
+
+    Route::get('/favorite-word', [UserWordController::class, 'getFavoriteWord'])
+        ->name('favorite-words');
+    Route::get('/unfamiliar-word', [UserWordController::class, 'getUnfamiliarWord'])
+        ->name('unfamiliar-words');
+
+    Route::get('/next-favorite-word', [UserWordController::class, 'getNextFavoriteWord'])
+        ->name('next-favorite-word');
+    Route::get('/next-unfamiliar-word', [UserWordController::class, 'getNextUnfamiliarWord'])
+        ->name('next-unfamiliar-word');
 });
 
 require __DIR__ . '/auth.php';
