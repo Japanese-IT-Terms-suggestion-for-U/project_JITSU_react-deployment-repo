@@ -13,4 +13,19 @@ class UserWord extends Model
     public $timestamps = false;
 
     protected $fillable = ['user_id', 'word_number', 'is_favorite', 'is_memorized'];
+
+    protected $casts = [
+        'is_favorite' => 'boolean',
+        'is_memorized' => 'boolean',
+    ];
+
+    public function word()
+    {
+        return $this->belongsTo(Word::class, 'word_number', 'word_number');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
