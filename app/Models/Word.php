@@ -13,5 +13,10 @@ class Word extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['japanese', 'korean', 'korean_definition', 'tag'];
+    protected $fillable = ['word_number', 'japanese', 'korean', 'korean_definition', 'tag'];
+
+    public function userWord()
+    {
+        return $this->hasMany(UserWord::class, 'word_number', 'word_number');
+    }
 }
