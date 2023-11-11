@@ -6,8 +6,8 @@
 
   <div class="flex justify-between mt-4">
       <x-danger-button
-              x-data=""
-              x-on:click.prevent="window.modal.closeModal()"
+        x-data=""
+        @click.prevent="closeModal()"
       >{{ __('Close') }}
       </x-danger-button>
   </div>

@@ -16,8 +16,9 @@
 
     <x-danger-button
         x-data=""
-        x-on:click.prevent="window.modal.closeModal()"
-    >{{ __('Close') }}</x-danger-button>
+        @click.prevent="closeModal()"
+    >{{ __('Close') }}
+    </x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
