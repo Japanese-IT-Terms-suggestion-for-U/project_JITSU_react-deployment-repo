@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserWord::class);
     }
+
+    public function userTag()
+    {
+        return $this->hasMany(UserTag::class);
+    }
 }

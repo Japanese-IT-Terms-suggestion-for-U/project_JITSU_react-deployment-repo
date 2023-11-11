@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('usertags', function (Blueprint $table) {
+        Schema::create('user_tags', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned();
             $table->integer('tag_id');
 
@@ -19,6 +19,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('usertags');
+        Schema::dropIfExists('user_tags');
     }
 };
