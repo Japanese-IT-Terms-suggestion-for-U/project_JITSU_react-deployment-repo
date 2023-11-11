@@ -8,6 +8,13 @@ use App\Models\Tag;
 
 class WordController extends Controller
 {
+    public function index()
+    {
+        $word = Word::inRandomOrder()->first();
+
+        return view('dashboard', ['word' => $word]);
+    }
+
     public function store(Request $request)
     {
         $word = new Word([
@@ -29,15 +36,10 @@ class WordController extends Controller
         return redirect('dashboard');
     }
 
-    public function index()
-    {
-        $word = Word::first();
-        return view('dashboard', ['word' => $word]);
-    }
-
     public function random()
     {
         $word = Word::inRandomOrder()->first();
+
         return response()->json($word);
     }
 }
