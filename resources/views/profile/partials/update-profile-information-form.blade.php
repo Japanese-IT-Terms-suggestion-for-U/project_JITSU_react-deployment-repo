@@ -51,7 +51,7 @@
             <x-primary-button>{{ __('更新') }}</x-primary-button>
             <x-danger-button
                 x-data=""
-                x-on:click.prevent="window.modal.closeModal()"
+                @click.prevent="closeModal()"
             >{{ __('Close') }}
             </x-danger-button>
 

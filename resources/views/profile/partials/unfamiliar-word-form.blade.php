@@ -105,8 +105,8 @@
       <button id="unfamiliarCardMemorizedButton" class="px-4 py-2 bg-green-500 text-white rounded-lg">知らない</button>
       <button id="unfamiliarCardNextButton" class="px-4 py-2 bg-blue-500 text-white rounded-lg">次</button>
       <x-danger-button
-              x-data=""
-              x-on:click.prevent="window.modal.closeModal()"
+        x-data=""
+        @click.prevent="closeModal()"
       >{{ __('Close') }}
       </x-danger-button>
   </div>
