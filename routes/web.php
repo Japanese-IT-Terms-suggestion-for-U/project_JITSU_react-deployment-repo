@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserTagController;
 use App\Http\Controllers\UserWordController;
 use App\Http\Controllers\WordController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
-    Route::patch('/user-words/{word}', [UserWordController::class, 'update'])
+    Route::patch('/user-words/{word}', [UserWordController::class, 'addWordPad'])
         ->name('user-words.update');
 
     Route::get('/favorite-word', [UserWordController::class, 'getFavoriteWord'])
@@ -39,6 +40,11 @@ Route::middleware('auth')->group(function () {
         ->name('next-favorite-word');
     Route::get('/next-unfamiliar-word', [UserWordController::class, 'getNextUnfamiliarWord'])
         ->name('next-unfamiliar-word');
+
+    Route::patch('/profile/tags-update', [UserTagController::class, 'update'])
+        ->name('profile.tags.update');
+    Route::get('/profile/get-user-tags', [UserTagController::class, 'getUserTags'])
+        ->name('profile.tags.get');
 });
 
 require __DIR__ . '/auth.php';
