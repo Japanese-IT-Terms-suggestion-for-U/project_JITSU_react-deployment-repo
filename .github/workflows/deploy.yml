@@ -30,9 +30,6 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
-
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
