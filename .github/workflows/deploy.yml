@@ -40,7 +40,7 @@ jobs:
           npm install
 
       - name: Build assets
-        run: npm run prod
+        run: npm run build
 
       - name: Connect deploy key
         uses: cloudtype-github-actions/connect@v1
