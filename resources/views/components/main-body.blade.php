@@ -21,12 +21,12 @@
                 <p class="mb-4 text-gray-600 text-center animate-pulse">Japanese IT Terms suggestion for U</p>
 
                 <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
-                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">1. サービス紹介</h2>
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">サービス紹介</h2>
                     <p class="mb-4 text-gray-700 animate-pulse">このページは'勉強したい分野の単語を学習できるようにランダムで出せるサービス、JITSU'に関する全体的な情報を提供します。ユーザーの傾向に合った単語を学習することができます。</p>
                 </div>
 
                 <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
-                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">2. 気にしていたとこ</h2>
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">気にしていたとこ</h2>
                     <ul class="space-y-2">
                         <li class="p-3 bg-gray-200 rounded shadow animate-pulse">SSR</li>
                         <li class="p-3 bg-gray-200 rounded shadow animate-pulse">Crawling</li>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
-                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">3. 機能</h2>
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">機能</h2>
                     <ul class="space-y-2">
                         <li class="p-3 bg-gray-200 rounded shadow animate-pulse">ログイン</li>
                         <li class="p-3 bg-gray-200 rounded shadow animate-pulse">マイページ</li>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
-                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">4. 技術スタック</h2>
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">技術スタック</h2>
                     <div class="flex justify-around mt-4">
                         <img src="{{ asset('images/laravel.svg') }}" alt="Laravel" class="w-12 h-12 animate-bounce">
                         <img src="{{ asset('images/mysql.svg') }}" alt="MySQL" class="w-12 h-12 animate-bounce">
