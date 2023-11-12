@@ -1,33 +1,33 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     {{-- ログインしているケース --}}
     @if (Auth::check())
-        <!-- Primary Navigation Menu -->
+        <!-- 基本ナビゲーションメニュー -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
-                    <!-- Logo -->
+                    <!-- ロゴ -->
                     <div class="shrink-0 flex items-center">
                         <a href="{{ route('main') }}">
                             <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                         </a>
                     </div>
 
-                    <!-- Navigation Links -->
+                    <!-- ナビゲーションリンク -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('ダッシュボード') }}
+                            {{ __('用語学習') }}
                         </x-nav-link>
                     </div>
 
-                    <!-- 掲示板 Links -->
+                    <!-- コミュニティリンク -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('board')" :active="request()->routeIs('board')">
-                            {{ __('コミュニティ') }}
+                            {{ __('コミュニティー') }}
                         </x-nav-link>
                     </div>
                 </div>
 
-                <!-- Settings Dropdown -->
+                <!-- 設定ドロップダウン -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -47,7 +47,7 @@
                                 {{ __('プロフィール') }}
                             </x-dropdown-link>
 
-                            <!-- Authentication -->
+                            <!-- 認証 -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
@@ -61,7 +61,7 @@
                     </x-dropdown>
                 </div>
 
-                <!-- Hamburger -->
+                <!-- ハンバーガー -->
                 <div class="-mr-2 flex items-center sm:hidden">
                     <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -73,15 +73,15 @@
             </div>
         </div>
 
-        <!-- Responsive Navigation Menu -->
+        <!-- 反応型ナビゲーションメニュー -->
         <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('用語学習') }}
                 </x-responsive-nav-link>
             </div>
 
-            <!-- Responsive Settings Options -->
+            <!-- 反応型設定オプション -->
             <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
@@ -90,16 +90,16 @@
 
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
+                        {{ __('プロフィール') }}
                     </x-responsive-nav-link>
 
-                    <!-- Authentication -->
+                    <!-- 認証 -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-responsive-nav-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('ログアウト') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>
@@ -110,14 +110,14 @@
     @else
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <!-- Logo -->
+                <!-- 로고 -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('main') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
         
-                <!-- Authentication -->
+                <!-- 認証 -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-200">ログイン</a>
                     <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-200">会員登録</a>

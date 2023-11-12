@@ -14,30 +14,47 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900 dark:dark:text-gray-200">
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                <h1 class="text-3xl font-bold mb-4">🏯 JITSU</h1>
-                <p class="mb-4">Japanese It Terms suggestion for U</p>
+    <body class="font-sans antialiased bg-gradient-to-r from-gray-500 bg-gray-100 dark:bg-gray-900 dark:dark:text-gray-200">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 text-white pb-20">
+            <div class="w-2/5 sm:max-w-full mt-6 px-2 sm:px-4 py-4 bg-white dark:bg-gray-800 shadow-2xl overflow-hidden sm:rounded-lg text-gray-800"> <!-- 너비와 패딩 수정 -->
+                <h1 class="text-4xl font-bold mb-4 text-center text-purple-600 transform transition-all hover:scale-125 animate-bounce">🏯 JITSU</h1>
+                <p class="mb-4 text-gray-600 text-center animate-pulse">Japanese IT Terms suggestion for U</p>
 
-                <h2 class="text-2xl font-bold mt-4 mb-2">1. サービス紹介</h2>
-                <p class="mb-4">このページは'勉強したい分野の単語を学習できるようにランダムで出せるサービス、JITSU'に関する全体的な情報を提供します。ユーザーの傾向に合った単語を学習することができます。</p>
+                <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">1. サービス紹介</h2>
+                    <p class="mb-4 text-gray-700 animate-pulse">このページは'勉強したい分野の単語を学習できるようにランダムで出せるサービス、JITSU'に関する全体的な情報を提供します。ユーザーの傾向に合った単語を学習することができます。</p>
+                </div>
 
-                <h2 class="text-2xl font-bold mt-4 mb-2">2. 気にしていたとこ</h2>
-                - SSR <br>
-                - Crawling <br>
-                - Pipeline <br>
+                <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">2. 気にしていたとこ</h2>
+                    <ul class="space-y-2">
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">SSR</li>
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">Crawling</li>
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">Pipeline</li>
+                    </ul>
+                </div>
 
-                <h2 class="text-2xl font-bold mt-4 mb-2">3. 機能</h2>
-                - ログイン・会員登録 <br>
-                - マイページ <br>
-                - 単語カード <br>
+                <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">3. 機能</h2>
+                    <ul class="space-y-2">
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">ログイン</li>
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">マイページ</li>
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">用語カード</li>
+                        <li class="p-3 bg-gray-200 rounded shadow animate-pulse">コミュニティー</li>
+                    </ul>
+                </div>
 
-                <h2 class="text-2xl font-bold mt-4 mb-2">4. プロジェクト構造</h2>
-
-                <h2 class="text-2xl font-bold mt-4 mb-2">5. 技術スタック</h2>
-                <!-- 기술 스택 이미지 추가 -->
-                <!-- 커뮤니케이션 도구 이미지 추가 -->
+                <div class="my-6 p-4 bg-blue-100 rounded-xl shadow-2xl hover:bg-blue-200 transition-all duration-500">
+                    <h2 class="text-2xl font-bold mb-2 bg-blue-300 p-2 rounded text-white shadow-lg animate-wiggle">4. 技術スタック</h2>
+                    <div class="flex justify-around mt-4">
+                        <img src="{{ asset('images/laravel.svg') }}" alt="Laravel" class="w-12 h-12 animate-bounce">
+                        <img src="{{ asset('images/mysql.svg') }}" alt="MySQL" class="w-12 h-12 animate-bounce">
+                        <img src="{{ asset('images/tailwind.svg') }}" alt="Tailwind CSS" class="w-12 h-12 animate-bounce">
+                        <img src="{{ asset('images/python.svg') }}" alt="Python" class="w-12 h-12 animate-bounce">
+                        <img src="{{ asset('images/github.svg') }}" alt="Github" class="w-12 h-12 animate-bounce">
+                        <img src="{{ asset('images/devops.svg') }}" alt="DevOps" class="w-12 h-12 animate-bounce">
+                    </div>
+                </div>
             </div>
         </div>
     </body>

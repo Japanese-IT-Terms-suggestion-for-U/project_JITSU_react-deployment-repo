@@ -65,16 +65,10 @@
     });
 </script>
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ Auth::user()->name }}{{ __('様、ようこそ！') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
+    <div class="flex items-center justify-center min-h-screen overflow-auto bg-gradient-to-r from-gray-500 bg-gray-100 dark:bg-gray-900 dark:dark:text-gray-200">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg flex flex-col items-center justify-center">
-                <div class="p-6 text-gray-900 dark:text-gray-100 flex items-center">
+            <div class="overflow-hidden shadow-sm sm:rounded-lg flex flex-col items-center justify-center pb-20 mb-20 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 flex items-center">
                     <!-- Card contents -->
                     <x-card :word="$word" />
                 </div>
@@ -90,4 +84,7 @@
             </div>
         </div>
     </div>
+
+    {{-- Footer --}}
+    <x-footer />
 </x-app-layout>
