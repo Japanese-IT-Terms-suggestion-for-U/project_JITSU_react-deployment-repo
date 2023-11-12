@@ -87,9 +87,7 @@
                 <span class="flex-1 ml-3 whitespace-nowrap">知らない</span>
             </a>
         </li>
-        {{-- TODO: 태그 설정 모달 구현 --}}
         <li>
-            {{-- <a href="#" @click.prevent="$dispatch('open-modal', 'tag-setting')" class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"> --}}
             <a href="#" @click.prevent="openModal('tag-setting-form')" class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25"/>
@@ -122,33 +120,33 @@
             </a>
         </li>
     </ul>
-    <div x-ref="favorite-word-form" x-show="isModal('favorite-word-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
-        <div>
+    <div x-ref="favorite-word-form" x-show="isModal('favorite-word-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" style="width:100%; height:100%;">
+        <div style="width:60vw; height:60vh; max-width:800px; max-height:600px;">
             @include('profile.partials.favorite-word-form')
         </div>
     </div>
-    <div x-ref="unfamiliar-word-form" x-show="isModal('unfamiliar-word-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
-        <div>
+    <div x-ref="unfamiliar-word-form" x-show="isModal('unfamiliar-word-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" style="width:100%; height:100%;">
+        <div style="width:60vw; height:60vh; max-width:800px; max-height:600px;">
             @include('profile.partials.unfamiliar-word-form')
         </div>
     </div>
-    <div x-ref="tag-setting-form" x-show="isModal('tag-setting-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
-        <div>
+    <div x-ref="tag-setting-form" x-show="isModal('tag-setting-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" style="width:100%; height:100%;">
+        <div style="width:60vw; height:60vh; max-width:800px; max-height:600px;">
             @include('profile.partials.tag-setting-form')
         </div>
     </div>
-    <div x-ref="update-profile-information-form" x-show="isModal('update-profile-information-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
-        <div>
+    <div x-ref="update-profile-information-form" x-show="isModal('update-profile-information-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" style="width:100%; height:100%;">
+        <div style="width:60vw; height:60vh; max-width:800px; max-height:600px;">
             @include('profile.partials.update-profile-information-form')
         </div>
     </div>
-    <div x-ref="update-password-form" x-show="isModal('update-password-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
-        <div>
+    <div x-ref="update-password-form" x-show="isModal('update-password-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" style="width:100%; height:100%;">
+        <div style="width:60vw; height:60vh; max-width:800px; max-height:600px;">
             @include('profile.partials.update-password-form')
         </div>
     </div>
-    <div x-ref="delete-user-form" x-show="isModal('delete-user-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
-        <div>
+    <div x-ref="delete-user-form" x-show="isModal('delete-user-form')" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" style="width:100%; height:100%;">
+        <div style="width:60vw; height:60vh; max-width:800px; max-height:600px;">
             @include('profile.partials.delete-user-form')
         </div>
     </div>
