@@ -37,7 +37,7 @@ jobs:
             name: project-jitsu-deployment-repo
             app: php
             options:
-              ports: 9000
+              ports: 8000
               docbase: /public
               nodejs: true
               env:
