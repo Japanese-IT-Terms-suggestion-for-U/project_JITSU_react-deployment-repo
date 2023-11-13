@@ -1,4 +1,10 @@
 <style>
+    button {
+        transition: transform 0.1s ease;
+    }
+    button:active {
+        transform: scale(0.95);
+    }
     .update-profile-modal-container {
         display: flex;
         justify-content: center;
