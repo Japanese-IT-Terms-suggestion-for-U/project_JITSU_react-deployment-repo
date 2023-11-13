@@ -28,10 +28,12 @@
 
         favoriteButton.addEventListener('click', function() {
             updateWordStatus(wordId, 'favorite');
+            alert('気に入りに追加されました！');
         });
 
         memorizedButton.addEventListener('click', function() {
             updateWordStatus(wordId, 'memorized');
+            alert('知らないリストに追加されました！');
         });
 
         nextButton.addEventListener("click", async function() {
@@ -85,6 +87,16 @@
 
 
 <style>
+    button {
+        transition: transform 0.1s ease;
+    }
+    button:active {
+        transform: scale(0.95);
+    }
+    .favoriteCardBackContent {
+        overflow: auto;
+        max-height: 150px;
+    }
     .favorite-modal-class {
         display: flex;
         justify-content: center;
@@ -108,8 +120,9 @@
         background-color: transparent;
     }
     .favorite-header {
-        width: 50%;
+        width: 20%;
         text-align: center;
+        padding: 20px 0;
     }
     .favorite-card-wrapper {
         border: 2px solid #ddd;
@@ -133,46 +146,46 @@
         margin-top: 20px;
     }
     .favorite-center-elements {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
     .favorite-button-elements {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-      flex-direction: column;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        flex-direction: column;
     }
     .favorite-cursor-pointer {
-      cursor: pointer;
+        cursor: pointer;
     }
     .favorite-input-field {
-      padding: 10px;
-      width: 100%;
-      height: 50px;
-      border: 1px solid #ddd;
+        padding: 10px;
+        width: 100%;
+        height: 50px;
+        border: 1px solid #ddd;
     }
     .favorite-tag-header {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-bottom: 1em;
-      text-align: center;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 1em;
+        text-align: center;
     }
 </style>
 
 <section class="favorite-modal-class">
+    <header class="favorite-header">
+        <h2 class="text-lg font-medium text-white-900">
+            {{ __('お気に入りリスト') }}
+        </h2>
+        <p class="mt-1 text-sm text-white-600">
+            {{ __('気になっていた用語をまとめて見ることができます。') }}
+        </p>
+    </header>
+
     <div class="favorite-modal-content">
-        <header class="favorite-header">
-            <h2 class="text-lg font-medium text-white-900">
-                {{ __('お気に入りリスト') }}
-            </h2>
-            <p class="mt-1 text-sm text-white-600">
-                {{ __('気になっていた用語をまとめて見ることができます。') }}
-            </p>
-        </header>
-        
         <div class="favorite-card-wrapper">
             <div class="favorite-card-container">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg favorite-center-elements">
@@ -186,7 +199,7 @@
                             <button id="favoriteCardFlipButton" class="mt-6 px-4 py-2 bg-pink-500 text-white rounded-lg">詳しく</button>
                             </div>
                             <div id="favoriteCardBack" class="absolute w-full h-full bg-white flex flex-col p-6 items-start items-center justify-center justify-between backface-hidden rotate-y-180">
-                            <p class="font-sans text-lg font-light text-black text-center"></p>
+                            <p class="favoriteCardBackContent font-sans text-lg font-light text-black text-center"></p>
                             <button id="favoriteCardUnflipButton" class="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg">戻り</button>
                             </div>        
                         </div>

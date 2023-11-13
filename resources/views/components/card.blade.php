@@ -13,7 +13,15 @@
             card.style.transform = 'rotateY(0deg)';
         });
     };
-</script>        
+</script>
+
+<style>
+    #cardBack p {
+        overflow: auto;
+        max-height: 150px;
+    }
+</style>
+
 <div class="relative mt-6 w-96 rounded-xl overflow-hidden shadow-md">
     <div id="card" class="relative w-full h-64 transform-gpu transition-transform duration-1000 ease-in-out">
         <div id="cardFront" class="absolute w-full h-full bg-white flex flex-col p-6 items-center justify-center">
