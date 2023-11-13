@@ -67,6 +67,19 @@
                 console.log(data);
             });
         }
+
+        function loadUnfamiliarWordForm() {
+            document.getElementById('unfamiliarCardFlipButton').addEventListener('click', function() {
+                const card = document.getElementById('unfamiliarCard');
+                card.style.transform = 'rotateY(180deg)';
+            });
+
+            document.getElementById('unfamiliarCardUnflipButton').addEventListener('click', function() {
+                const card = document.getElementById('unfamiliarCard');
+                card.style.transform = 'rotateY(0deg)';
+            });
+        }
+        loadUnfamiliarWordForm();
     });
 
 </script>
