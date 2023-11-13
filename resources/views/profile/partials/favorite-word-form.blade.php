@@ -67,29 +67,22 @@
                 console.log(data);
             });
         }
+
+        function loadFavoriteWordForm() {
+            document.getElementById('favoriteCardFlipButton').addEventListener('click', function() {
+                const card = document.getElementById('favoriteCard');
+                card.style.transform = 'rotateY(180deg)';
+            });
+
+            document.getElementById('favoriteCardUnflipButton').addEventListener('click', function() {
+                const card = document.getElementById('favoriteCard');
+                card.style.transform = 'rotateY(0deg)';
+            });
+        }
+        loadFavoriteWordForm();
     });
-    window.onload = function() {
-        document.getElementById('favoriteCardFlipButton').addEventListener('click', function() {
-            const card = document.getElementById('favoriteCard');
-            card.style.transform = 'rotateY(180deg)';
-        });
-
-        document.getElementById('favoriteCardUnflipButton').addEventListener('click', function() {
-            const card = document.getElementById('favoriteCard');
-            card.style.transform = 'rotateY(0deg)';
-        });
-
-        document.getElementById('unfamiliarCardFlipButton').addEventListener('click', function() {
-            const card = document.getElementById('unfamiliarCard');
-            card.style.transform = 'rotateY(180deg)';
-        });
-
-        document.getElementById('unfamiliarCardUnflipButton').addEventListener('click', function() {
-            const card = document.getElementById('unfamiliarCard');
-            card.style.transform = 'rotateY(0deg)';
-        });
-    };
 </script>
+
 
 <style>
     .favorite-modal-class {
