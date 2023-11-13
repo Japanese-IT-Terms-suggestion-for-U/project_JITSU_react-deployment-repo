@@ -49,6 +49,18 @@ jobs:
                   value: https://port-9000-project-jitsu-deployment-repo-jvpb2mlogpt1ym.sel5.cloudtype.app/
                 - name: APP_ENV
                   value: production
+                - name: DB_CONNECTION
+                  value: mysql
+                - name: DB_HOST
+                  value: svc.sel5.cloudtype.app
+                - name: DB_PORT
+                  value: 30706
+                - name: DB_DATABASE
+                  value: jitsu
+                - name: DB_USERNAME
+                  value: root
+                - name: DB_PASSWORD
+                  value: adminym1234
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
