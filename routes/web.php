@@ -6,6 +6,10 @@ use App\Http\Controllers\UserWordController;
 use App\Http\Controllers\WordController;
 use Illuminate\Support\Facades\Route;
 
+if (env('APP_ENV') == 'production') {
+    \Illuminate\Support\Facades\URL::forceScheme('https');
+}
+
 Route::get('/', function () {
     return view('main');
 })->name('main');
