@@ -1,4 +1,10 @@
 <style>
+    button {
+        transition: transform 0.1s ease;
+    }
+    button:active {
+        transform: scale(0.95);
+    }
     .delete-user-modal-container {
         display: flex;
         justify-content: center;

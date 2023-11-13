@@ -43,6 +43,12 @@
 </script>
 
 <style>
+  button {
+        transition: transform 0.1s ease;
+    }
+    button:active {
+        transform: scale(0.95);
+    }
   .tag-modal-container {
       display: flex;
       justify-content: center;
@@ -70,12 +76,18 @@
       width: 50%;
       border: 2px solid #ddd;
       border-radius: 5px;
-      padding: 20px;
+      padding: 10px;
       margin-top: 20px;
   }
+  .tag-checkbox-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
   .tag-header-container {
-      width: 30%;
-      padding-right: 20px;
+      width: 20%;
   }
   .tag-center-elements {
       display: flex;
@@ -107,7 +119,7 @@
 </style>
 
 <section class="tag-modal-container bg-white rounded-lg shadow">
-  <header>
+  <header class="tag-header-container">
     <h2 class="text-lg font-medium text-white-900">
         {{ __('タッグ設定') }}
     </h2>
