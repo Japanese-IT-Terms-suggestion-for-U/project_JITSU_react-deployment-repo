@@ -78,7 +78,7 @@ class UserWordController extends Controller
         return response()->json($nextUnfamiliarWord ? $nextUnfamiliarWord->word : null);
     }
 
-    public function update(Request $request, $wordNumber)
+    public function addWordPad(Request $request, $wordNumber)
     {
         $status = $request->input('status');
 
