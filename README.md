@@ -13,6 +13,9 @@
 <br>
 
 # 2. 気にしていたとこ
+1. **SSR**
+2. **Crawling**
+3. **Pipeline**
 
 ---
 <br>
@@ -26,6 +29,7 @@
 <br>
 
 # 4. プロジェクト構造
+![스크린샷 2023-11-16 오전 1 45 46](https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/63364f94-8a6b-4dee-adb2-6fabd3bfe38b)
 
 ---
 <br>
