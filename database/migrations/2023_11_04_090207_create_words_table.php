@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('words', function (Blueprint $table) {
-            $table->integer('word_number')->primary();
+            $table->id();
             $table->text('japanese');
             $table->text('korean');
             $table->text('korean_definition')->nullable();

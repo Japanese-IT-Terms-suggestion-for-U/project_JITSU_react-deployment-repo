@@ -9,11 +9,11 @@ return new class extends Migration {
     {
         Schema::create('user_tags', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('tag_id');
+            $table->bigInteger('tag_id')->unsigned();
 
             $table->primary(['user_id', 'tag_id']);
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('tag_id')->references('tag_id')->on('tags');
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 
