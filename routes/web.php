@@ -22,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('board');
 });
 
+Route::post('/words', [WordController::class, 'store']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/random-word', [WordController::class, 'random']);
 
@@ -49,6 +51,9 @@ Route::middleware('auth')->group(function () {
         ->name('profile.tags.update');
     Route::get('/profile/get-user-tags', [UserTagController::class, 'getUserTags'])
         ->name('profile.tags.get');
+
+    Route::get('/word-status/{wordId}', [UserWordController::class, 'getWordStatus'])
+        ->name('word-status');
 });
 
 require __DIR__ . '/auth.php';
