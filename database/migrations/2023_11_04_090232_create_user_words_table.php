@@ -10,12 +10,12 @@ return new class extends Migration {
         Schema::create('user_words', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('word_number');
+            $table->bigInteger('word_number')->unsigned();
             $table->boolean('is_favorite');
             $table->boolean('is_memorized');
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('word_number')->references('word_number')->on('words');
+            $table->foreign('word_number')->references('id')->on('words');
         });
     }
 
