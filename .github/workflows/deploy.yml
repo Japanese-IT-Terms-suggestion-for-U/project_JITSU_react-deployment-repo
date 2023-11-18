@@ -17,13 +17,13 @@ jobs:
 
       - name: Set test database connection
         run: |
-          echo "APP_KEY=base64:3msdjscoKayH6sw0w6c/Xwx0wtZcXUoa3RB0JqjmRXY=" >> .env
-          echo "DB_CONNECTION=mysql" >> .env
-          echo "DB_HOST=svc.sel5.cloudtype.app" >> .env
-          echo "DB_PORT=30706" >> .env
-          echo "DB_DATABASE=jitsu" >> .env
-          echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=adminym1234" >> .env
+          echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+          echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
@@ -63,25 +63,25 @@ jobs:
               nodejs: true
               env:
                 - name: APP_KEY
-                  value: base64:3msdjscoKayH6sw0w6c/Xwx0wtZcXUoa3RB0JqjmRXY=
+                  value: ${{ secrets.APP_KEY }}
                 - name: LOG_CHANNEL
                   value: errorlog
                 - name: APP_URL
-                  value: https://port-9000-project-jitsu-deployment-repo-jvpb2mlogpt1ym.sel5.cloudtype.app/
+                  value: ${{ secrets.APP_URL }}
                 - name: APP_ENV
-                  value: production
+                  value: ${{ secrets.APP_ENV }}
                 - name: DB_CONNECTION
-                  value: mysql
+                  value: ${{ secrets.DB_CONNECTION }}
                 - name: DB_HOST
-                  value: svc.sel5.cloudtype.app
+                  value: ${{ secrets.DB_HOST }}
                 - name: DB_PORT
-                  value: 30706
+                  value: ${{ secrets.DB_PORT }}
                 - name: DB_DATABASE
-                  value: jitsu
+                  value: ${{ secrets.DB_DATABASE }}
                 - name: DB_USERNAME
-                  value: root
+                  value: ${{ secrets.DB_USERNAME }}
                 - name: DB_PASSWORD
-                  value: adminym1234
+                  value: ${{ secrets.DB_PASSWORD }}
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
