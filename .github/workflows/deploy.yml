@@ -9,6 +9,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
+          DB_HOST: localhost
           MYSQL_ROOT_PASSWORD: adminym1234
         ports:
           - 30706
