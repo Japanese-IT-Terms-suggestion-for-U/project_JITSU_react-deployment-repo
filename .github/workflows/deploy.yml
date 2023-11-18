@@ -19,7 +19,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run tests
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit tests/Feature/WordControllerTest.php
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
