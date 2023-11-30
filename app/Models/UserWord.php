@@ -21,7 +21,7 @@ class UserWord extends Model
 
     public function word()
     {
-        return $this->belongsTo(Word::class, 'word_number', 'word_number');
+        return $this->belongsTo(Word::class, 'word_number', 'id');
     }
 
     public function user()

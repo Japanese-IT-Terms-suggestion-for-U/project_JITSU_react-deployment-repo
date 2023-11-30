@@ -5,7 +5,7 @@
         const koreanDefinitionElement = document.querySelector("#cardBack p");
         const nextButton = document.getElementById('nextButton');
 
-        let wordId = {!! json_encode($word->word_number) !!};
+        let wordId = {!! json_encode($word->id) !!};
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         const favoriteButton = document.getElementById('favoriteButton');
@@ -31,7 +31,9 @@
                     japaneseElement.textContent = word.japanese;
                     koreanElement.textContent = word.korean;
                     koreanDefinitionElement.textContent = word.korean_definition;
-                    wordId = word.word_number;
+                    wordId = word.id;
+
+                    console.log(word);
 
                     const card = document.getElementById('card');
                     if (card.style.transform === 'rotateY(180deg)') {

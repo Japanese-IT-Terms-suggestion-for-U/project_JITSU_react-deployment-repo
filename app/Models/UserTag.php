@@ -20,6 +20,6 @@ class UserTag extends Model
 
     public function tag()
     {
-        return $this->belongsTo(Tag::class, 'tag_id', 'tag_id');
+        return $this->belongsTo(Tag::class);
     }
 }

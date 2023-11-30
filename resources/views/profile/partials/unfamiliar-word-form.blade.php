@@ -19,7 +19,7 @@
             japaneseElement.textContent = data.word.japanese;
             koreanElement.textContent = data.word.korean;
             koreanDefinitionElement.textContent = data.word.korean_definition;
-            wordId = data.word.word_number;
+            wordId = data.word.id;
         } else {
             japaneseElement.textContent = '';
             koreanElement.textContent = '';
@@ -44,7 +44,7 @@
                 japaneseElement.textContent = data.japanese;
                 koreanElement.textContent = data.korean;
                 koreanDefinitionElement.textContent = data.korean_definition;
-                wordId = data.word_number;
+                wordId = data.id;
 
                 const card = document.getElementById('unfamiliarCard');
                 card.style.transform = 'rotateY(0deg)';
