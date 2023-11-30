@@ -7,19 +7,53 @@
         const favoriteButton = document.getElementById('favoriteCardFavoriteButton');
         const memorizedButton = document.getElementById('favoriteCardMemorizedButton');
 
+        function updateButtonStatus(buttonId, status, wordId) {
+            const button = document.getElementById(buttonId);
+            const isFavorite = status === 'favorite';
+            const isFavoriteStatusSet = button.textContent === (isFavorite ? '気に入り' : '知らない');
+            const newStatus = isFavoriteStatusSet ? (isFavorite ? '気に入り取消' : '知らない取消') : (isFavorite ? '気に入り' : '知らない');
+            const alertMessage = isFavoriteStatusSet ? (isFavorite ? '気に入りリストから解除されました！' : '知らないリストから解除されました！') : (isFavorite ? '気に入りリストに追加されました！' : '知らないリストに追加されました！');
+            button.textContent = newStatus;
+            alert(alertMessage);
+            updateWordStatus(wordId, status);
+        }
+
+        document.querySelector('.favorite-button-elements').addEventListener('click', function(e) {
+            if (e.target.id === 'favoriteCardFavoriteButton' || e.target.id === 'favoriteCardMemorizedButton') {
+                updateButtonStatus(e.target.id, e.target.id === 'favoriteCardFavoriteButton' ? 'favorite' : 'memorized', wordId);
+            }
+        });
+
         let wordId = null;
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         const response = await fetch('/favorite-word')
         const data = await response.json();
 
-        console.log(data.word);
-
         if (data) {
             japaneseElement.textContent = data.word.japanese;
             koreanElement.textContent = data.word.korean;
             koreanDefinitionElement.textContent = data.word.korean_definition;
-            wordId = data.word.word_number;
+            wordId = data.word.id;
+
+            const statusResponse = await fetch(`/word-status/${wordId}`);
+            const wordStatus = await statusResponse.json();
+
+            if (wordStatus.favorite) {
+                favoriteButton.textContent = '気に入り取消';
+                favoriteButton.onclick = function() {
+                    updateWordStatus(wordId, 'favorite');
+                    alert('気に入りリストから解除されました！');
+                };
+            }
+
+            if (wordStatus.memorized) {
+                memorizedButton.textContent = '知らない取消';
+                memorizedButton.onclick = function() {
+                    updateWordStatus(wordId, 'memorized');
+                    alert('知らないリストから解除されました！');
+                };
+            }
         } else {
             japaneseElement.textContent = '';
             koreanElement.textContent = '';
@@ -28,7 +62,7 @@
 
         favoriteButton.addEventListener('click', function() {
             updateWordStatus(wordId, 'favorite');
-            alert('気に入りに追加されました！');
+            alert('気に入りリストに追加されました！');
         });
 
         memorizedButton.addEventListener('click', function() {
@@ -40,19 +74,74 @@
             const response = await fetch(`/next-favorite-word?word_number=${wordId}`);
             const data = await response.json();
 
+            console.log(data);
+
             if (data) {
                 japaneseElement.textContent = data.japanese;
                 koreanElement.textContent = data.korean;
                 koreanDefinitionElement.textContent = data.korean_definition;
-                wordId = data.word_number;
+                wordId = data.id;
 
                 const card = document.getElementById('favoriteCard');
                 card.style.transform = 'rotateY(0deg)';
+
+                const statusResponse = await fetch(`/word-status/${wordId}`);
+                const wordStatus = await statusResponse.json();
+
+                if (wordStatus.favorite) {
+                    const newFavoriteButton = favoriteButton.cloneNode(true);
+                    newFavoriteButton.textContent = '気に入り取消';
+                    newFavoriteButton.onclick = function() {
+                        updateWordStatus(wordId, 'favorite');
+                        alert('気に入りリストから解除されました！');
+                    };
+                    favoriteButton.parentNode.replaceChild(newFavoriteButton, favoriteButton);
+                    favoriteButton = newFavoriteButton;
+                }
+                if (wordStatus.memorized) {
+                    const newMemorizedButton = memorizedButton.cloneNode(true);
+                    newMemorizedButton.textContent = '知らない取消';
+                    newMemorizedButton.onclick = function() {
+                        updateWordStatus(wordId, 'memorized');
+                        alert('知らないリ스트から解除されました！');
+                    };
+                    memorizedButton.parentNode.replaceChild(newMemorizedButton, memorizedButton);
+                    memorizedButton = newMemorizedButton;
+                }
             } else {
                 japaneseElement.textContent = '';
                 koreanElement.textContent = '';
                 koreanDefinitionElement.textContent = '';
             }
+        });
+
+        fetch(`/word-status/${wordId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(wordStatus => {
+            console.log(wordStatus);
+
+            if (wordStatus.favorite) {
+                favoriteButton.textContent = '気に入り取消';
+                favoriteButton.onclick = function() {
+                    updateWordStatus(wordId, 'favorite');
+                    alert('気に入り解除されました！');
+                };
+            }
+            if (wordStatus.memorized) {
+                memorizedButton.textContent = '知らない取消';
+                memorizedButton.onclick = function() {
+                    updateWordStatus(wordId, 'memorized');
+                    alert('知らないリストから解除されました！');
+                };
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
         });
 
         function updateWordStatus(wordId, status) {
@@ -66,7 +155,22 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                let button;
+                let newStatus;
+                let alertMessage;
+
+                if (status === 'favorite') {
+                    button = document.getElementById('favoriteCardFavoriteButton');
+                    newStatus = button.textContent === '気に入り' ? '気に入り取消' : '気に入り';
+                    alertMessage = newStatus === '気に入り' ? '気に入りに追加されました！' : '気に入り解除されました！';
+                } else if (status === 'memorized') {
+                    button = document.getElementById('favoriteCardMemorizedButton');
+                    newStatus = button.textContent === '知らない' ? '知らない取消' : '知らない';
+                    alertMessage = newStatus === '知らない' ? '知らないリストに追加されました！' : '知らないリストから解除されました！';
+                }
+
+                button.textContent = newStatus;
+                alert(alertMessage);
             });
         }
 

@@ -82,17 +82,17 @@ class UserWordController extends Controller
     {
         $status = $request->input('status');
 
-        $word = Word::where('word_number', $wordNumber)->first();
+        $word = Word::where('id', $wordNumber)->first();
 
         if (!$word) {
             $newWord = new Word();
-            $newWord->word_number = $wordNumber;
+            $newWord->id = $wordNumber;
             $newWord->save();
 
             $word = $newWord;
         }
 
-        $userWord = UserWord::firstOrNew(['user_id' => auth()->user()->id, 'word_number' => $word->word_number], ['is_favorite' => false, 'is_memorized' => false]);
+        $userWord = UserWord::firstOrNew(['user_id' => auth()->user()->id, 'word_number' => $word->id], ['is_favorite' => false, 'is_memorized' => false]);
 
         if ($status === 'favorite') {
             $userWord->is_favorite = true;
@@ -103,5 +103,19 @@ class UserWordController extends Controller
         $userWord->save();
 
         return response()->json($word);
+    }
+
+    public function getWordStatus($wordId)
+    {
+        $wordStatus = UserWord::where('user_id', auth()->user()->id)
+            ->where('word_number', $wordId)
+            ->select('is_favorite', 'is_memorized')
+            ->first();
+
+        if ($wordStatus === null) {
+            return response()->json(['error' => '단어 상태 정보를 찾을 수 없습니다.']);
+        }
+
+        return response()->json($wordStatus);
     }
 }
