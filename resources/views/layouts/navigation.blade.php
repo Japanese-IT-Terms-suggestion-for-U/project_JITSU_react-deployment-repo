@@ -13,14 +13,14 @@
                     </div>
 
                     <!-- ナビゲーションリンク -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <div class="space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('用語学習') }}
                         </x-nav-link>
                     </div>
 
                     <!-- コミュニティリンク -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <div class="space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('board')" :active="request()->routeIs('board')">
                             {{ __('コミュニティー') }}
                         </x-nav-link>
@@ -81,6 +81,12 @@
                 </x-responsive-nav-link>
             </div>
 
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('board')" :active="request()->routeIs('board')">
+                    {{ __('コミュニティー') }}
+                </x-responsive-nav-link>
+            </div>
+
             <!-- 反応型設定オプション -->
             <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                 <div class="px-4">
@@ -110,7 +116,7 @@
     @else
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <!-- 로고 -->
+                <!-- ロゴ -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('main') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
