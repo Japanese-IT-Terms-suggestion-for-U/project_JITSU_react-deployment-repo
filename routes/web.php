@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserTagController;
 use App\Http\Controllers\UserWordController;
@@ -17,9 +19,14 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [WordController::class, 'index'])
         ->name('dashboard');
-    Route::get('/board', function () {
-        return view('board');
-    })->name('board');
+    Route::get('/board', [PostController::class, 'show'])
+        ->name('board');
+    Route::post('/post/comments', [CommentController::class, 'store'])
+        ->name('post.comments');
+    Route::put('/post/comments/{comment}', [CommentController::class, 'update'])
+        ->name('post.comments.update');
+    Route::delete('/post/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('post.comments.destroy');
 });
 
 Route::post('/words', [WordController::class, 'store']);
