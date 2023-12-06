@@ -3,19 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Word;
 use App\Models\Tag;
 
 class WordController extends Controller
 {
-    public function index()
+    /**
+     * @Route("/dashboard", name="dashboard")
+     * @return \Illuminate\View\View
+     */
+    public function index(): View
     {
         $word = Word::inRandomOrder()->first();
 
         return view('dashboard', ['word' => $word]);
     }
 
-    public function store(Request $request)
+    /**
+     * @Route("/words", name="words")
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
     {
         $word = new Word([
             'japanese' => $request->japanese,
@@ -36,7 +48,11 @@ class WordController extends Controller
         return redirect('dashboard');
     }
 
-    public function random()
+    /**
+     * @Route("/random-word", name="random-word")
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function random(): JsonResponse
     {
         $word = Word::inRandomOrder()->first();
 

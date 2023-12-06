@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Tag;
 use App\Models\UserTag;
 use Illuminate\Http\Request;
 
 class UserTagController extends Controller
 {
-    public function getUserTags()
+    /**
+     * @Route("/profile/get-user-tags", name="profile.tags.get")
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUserTags(): JsonResponse
     {
         $user = Auth::user();
         $tags = UserTag::where('user_id', $user->id)->get()->pluck('tag.tag_name')->toArray();
@@ -17,7 +23,12 @@ class UserTagController extends Controller
         return response()->json($tags);
     }
 
-    public function update(Request $request)
+    /**
+     * @Route("/profile/tags-update", name="profile.tags.update")
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request): RedirectResponse
     {
         $user = Auth::user();
         $tagsInput = $request->input('tags');
