@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Models\Post;
 use App\Models\Comment;
 
 class PostController extends Controller
 {
-    public function show()
+    /**
+     * @Route("/board", name="board")
+     * @return \Illuminate\View\View
+     */
+    public function show(): View
     {
         $comment = new Comment();
 

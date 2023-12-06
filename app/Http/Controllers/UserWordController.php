@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 use App\Models\UserWord;
 use App\Models\Word;
 use Illuminate\Http\Request;
 
 class UserWordController extends Controller
 {
-    public function getFavoriteWord()
+    /**
+     * @Route("/favorite-word", name="favorite-words")
+     * @return \Illuminate\View\View
+     */
+    public function getFavoriteWord(): View
     {
         $word = UserWord::where('user_id', auth()->user()->id)
             ->where('is_favorite', true)
@@ -22,7 +28,11 @@ class UserWordController extends Controller
         return response()->json($word);
     }
 
-    public function getUnfamiliarWord()
+    /**
+     * @Route("/unfamiliar-word", name="unfamiliar-words")
+     * @return \Illuminate\View\View
+     */
+    public function getUnfamiliarWord(): View
     {
         $word = UserWord::where('user_id', auth()->user()->id)
             ->where('is_memorized', true)
@@ -36,7 +46,12 @@ class UserWordController extends Controller
         return response()->json($word);
     }
 
-    public function getNextFavoriteWord(Request $request)
+    /**
+     * @Route("/next-favorite-word", name="next-favorite-word")
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getNextFavoriteWord(Request $request): JsonResponse
     {
         $currentWordNumber = $request->input('word_number');
         $nextFavoriteWord = UserWord::where('user_id', auth()->user()->id)
@@ -57,7 +72,12 @@ class UserWordController extends Controller
         return response()->json($nextFavoriteWord ? $nextFavoriteWord->word : null);
     }
 
-    public function getNextUnfamiliarWord(Request $request)
+    /**
+     * @Route("/next-unfamiliar-word", name="next-unfamiliar-word")
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getNextUnfamiliarWord(Request $request): JsonResponse
     {
         $currentWordNumber = $request->input('word_number');
         $nextUnfamiliarWord = UserWord::where('user_id', auth()->user()->id)
@@ -78,7 +98,12 @@ class UserWordController extends Controller
         return response()->json($nextUnfamiliarWord ? $nextUnfamiliarWord->word : null);
     }
 
-    public function addWordPad(Request $request, $wordNumber)
+    /**
+     * @Route("/user-words/{word}", name="user-words.update")
+     * @param Request $request, $wordNumber
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addWordPad(Request $request, $wordNumber): JsonResponse
     {
         $status = $request->input('status');
 
@@ -105,7 +130,12 @@ class UserWordController extends Controller
         return response()->json($word);
     }
 
-    public function getWordStatus($wordId)
+    /**
+     * @Route("/word-status/{wordId}", name="word-status")
+     * @param $wordId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWordStatus($wordId): JsonResponse
     {
         $wordStatus = UserWord::where('user_id', auth()->user()->id)
             ->where('word_number', $wordId)

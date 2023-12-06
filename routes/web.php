@@ -29,10 +29,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('post.comments.destroy');
 });
 
-Route::post('/words', [WordController::class, 'store']);
+Route::post('/words', [WordController::class, 'store'])
+    ->name('words');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/random-word', [WordController::class, 'random']);
+    Route::get('/random-word', [WordController::class, 'random'])
+        ->name('random-word');
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Comment;
 
 class CommentController extends Controller
@@ -12,7 +13,7 @@ class CommentController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $comment = Comment::create([
             'content' => $request->content,
@@ -25,10 +26,10 @@ class CommentController extends Controller
 
     /**
      * @Route("/post/comments/{comment}", name="post.comments.update")
-     * @param Request $request
+     * @param Request $request, Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Comment $comment): RedirectResponse
     {
         $this->authorize('update', $comment);
 
@@ -40,10 +41,10 @@ class CommentController extends Controller
 
     /**
      * @Route("/post/comments/{comment}", name="post.comments.destroy")
-     * @param Request $request
+     * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment): RedirectResponse
     {
         $this->authorize('delete', $comment);
 
