@@ -17,7 +17,7 @@
 
 <style>
     #cardBack p {
-        overflow: auto;
+        overflow-y: auto;
         max-height: 150px;
     }
 </style>
