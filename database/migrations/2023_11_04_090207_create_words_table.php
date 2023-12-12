@@ -12,7 +12,9 @@ return new class extends Migration {
             $table->text('japanese');
             $table->text('korean');
             $table->text('korean_definition')->nullable();
-            $table->string('tag', 20);
+            $table->bigInteger('tag_id')->unsigned()->nullable();
+
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 
