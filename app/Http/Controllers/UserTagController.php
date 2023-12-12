@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Tag;
@@ -18,7 +19,7 @@ class UserTagController extends Controller
     public function getUserTags(): JsonResponse
     {
         $user = Auth::user();
-        $tags = UserTag::where('user_id', $user->id)->get()->pluck('tag.tag_name')->toArray();
+        $tags = UserTag::with('tag')->where('user_id', $user->id)->get()->pluck('tag.tag_name')->toArray();
 
         return response()->json($tags);
     }
@@ -38,15 +39,25 @@ class UserTagController extends Controller
             $tagsInput = ['OS'];
         }
 
-        // 기존 태그 삭제
-        UserTag::where('user_id', $user->id)->delete();
+        DB::beginTransaction();
 
-        // 새로운 태그 추가
-        foreach ($tagsInput as $tagName) {
-            $tag = Tag::firstOrCreate(['tag_name' => $tagName]);
-            UserTag::create(['user_id' => $user->id, 'tag_id' => $tag->tag_id]);
+        try {
+            // 기존 태그 삭제
+            UserTag::where('user_id', $user->id)->delete();
+
+            // 새로운 태그 추가
+            foreach ($tagsInput as $tagName) {
+                $tag = Tag::firstOrCreate(['tag_name' => $tagName]);
+                UserTag::create(['user_id' => $user->id, 'tag_id' => $tag->id]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->withErrors(['msg' => '태그 업데이트에 실패하였습니다.']);
         }
 
         return back()->with('status', '태그가 업데이트되었습니다.');
     }
+
 }
