@@ -13,7 +13,7 @@ class Post extends Model
 
     protected $fillable = ['user_id', 'title', 'content'];
 
-    public function comments()
+    public function comment()
     {
         return $this->hasMany('App\Models\Comment');
     }
