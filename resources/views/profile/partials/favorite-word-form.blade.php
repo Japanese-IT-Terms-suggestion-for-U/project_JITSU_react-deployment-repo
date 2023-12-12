@@ -1,195 +1,3 @@
-<script>
-    document.addEventListener("DOMContentLoaded", async function() {
-        const japaneseElement = document.querySelector("#favoriteCardFront h5");
-        const koreanElement = document.querySelector("#favoriteCardFront p");
-        const koreanDefinitionElement = document.querySelector("#favoriteCardBack p");
-        const nextButton = document.getElementById('favoriteCardNextButton');
-        const favoriteButton = document.getElementById('favoriteCardFavoriteButton');
-        const memorizedButton = document.getElementById('favoriteCardMemorizedButton');
-
-        function updateButtonStatus(buttonId, status, wordId) {
-            const button = document.getElementById(buttonId);
-            const isFavorite = status === 'favorite';
-            const isFavoriteStatusSet = button.textContent === (isFavorite ? '気に入り' : '知らない');
-            const newStatus = isFavoriteStatusSet ? (isFavorite ? '気に入り取消' : '知らない取消') : (isFavorite ? '気に入り' : '知らない');
-            const alertMessage = isFavoriteStatusSet ? (isFavorite ? '気に入りリストから解除されました！' : '知らないリストから解除されました！') : (isFavorite ? '気に入りリストに追加されました！' : '知らないリストに追加されました！');
-            button.textContent = newStatus;
-            alert(alertMessage);
-            updateWordStatus(wordId, status);
-        }
-
-        document.querySelector('.favorite-button-elements').addEventListener('click', function(e) {
-            if (e.target.id === 'favoriteCardFavoriteButton' || e.target.id === 'favoriteCardMemorizedButton') {
-                updateButtonStatus(e.target.id, e.target.id === 'favoriteCardFavoriteButton' ? 'favorite' : 'memorized', wordId);
-            }
-        });
-
-        let wordId = null;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        const response = await fetch('/favorite-word')
-        const data = await response.json();
-
-        if (data) {
-            japaneseElement.textContent = data.word.japanese;
-            koreanElement.textContent = data.word.korean;
-            koreanDefinitionElement.textContent = data.word.korean_definition;
-            wordId = data.word.id;
-
-            const statusResponse = await fetch(`/word-status/${wordId}`);
-            const wordStatus = await statusResponse.json();
-
-            if (wordStatus.favorite) {
-                favoriteButton.textContent = '気に入り取消';
-                favoriteButton.onclick = function() {
-                    updateWordStatus(wordId, 'favorite');
-                    alert('気に入りリストから解除されました！');
-                };
-            }
-
-            if (wordStatus.memorized) {
-                memorizedButton.textContent = '知らない取消';
-                memorizedButton.onclick = function() {
-                    updateWordStatus(wordId, 'memorized');
-                    alert('知らないリストから解除されました！');
-                };
-            }
-        } else {
-            japaneseElement.textContent = '';
-            koreanElement.textContent = '';
-            koreanDefinitionElement.textContent = '';
-        }
-
-        favoriteButton.addEventListener('click', function() {
-            updateWordStatus(wordId, 'favorite');
-            alert('気に入りリストに追加されました！');
-        });
-
-        memorizedButton.addEventListener('click', function() {
-            updateWordStatus(wordId, 'memorized');
-            alert('知らないリストに追加されました！');
-        });
-
-        nextButton.addEventListener("click", async function() {
-            const response = await fetch(`/next-favorite-word?word_number=${wordId}`);
-            const data = await response.json();
-
-            console.log(data);
-
-            if (data) {
-                japaneseElement.textContent = data.japanese;
-                koreanElement.textContent = data.korean;
-                koreanDefinitionElement.textContent = data.korean_definition;
-                wordId = data.id;
-
-                const card = document.getElementById('favoriteCard');
-                card.style.transform = 'rotateY(0deg)';
-
-                const statusResponse = await fetch(`/word-status/${wordId}`);
-                const wordStatus = await statusResponse.json();
-
-                if (wordStatus.favorite) {
-                    const newFavoriteButton = favoriteButton.cloneNode(true);
-                    newFavoriteButton.textContent = '気に入り取消';
-                    newFavoriteButton.onclick = function() {
-                        updateWordStatus(wordId, 'favorite');
-                        alert('気に入りリストから解除されました！');
-                    };
-                    favoriteButton.parentNode.replaceChild(newFavoriteButton, favoriteButton);
-                    favoriteButton = newFavoriteButton;
-                }
-                if (wordStatus.memorized) {
-                    const newMemorizedButton = memorizedButton.cloneNode(true);
-                    newMemorizedButton.textContent = '知らない取消';
-                    newMemorizedButton.onclick = function() {
-                        updateWordStatus(wordId, 'memorized');
-                        alert('知らないリ스트から解除されました！');
-                    };
-                    memorizedButton.parentNode.replaceChild(newMemorizedButton, memorizedButton);
-                    memorizedButton = newMemorizedButton;
-                }
-            } else {
-                japaneseElement.textContent = '';
-                koreanElement.textContent = '';
-                koreanDefinitionElement.textContent = '';
-            }
-        });
-
-        fetch(`/word-status/${wordId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(wordStatus => {
-            console.log(wordStatus);
-
-            if (wordStatus.favorite) {
-                favoriteButton.textContent = '気に入り取消';
-                favoriteButton.onclick = function() {
-                    updateWordStatus(wordId, 'favorite');
-                    alert('気に入り解除されました！');
-                };
-            }
-            if (wordStatus.memorized) {
-                memorizedButton.textContent = '知らない取消';
-                memorizedButton.onclick = function() {
-                    updateWordStatus(wordId, 'memorized');
-                    alert('知らないリストから解除されました！');
-                };
-            }
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
-
-        function updateWordStatus(wordId, status) {
-            fetch(`/user-words/${wordId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({ status: status })
-            })
-            .then(response => response.json())
-            .then(data => {
-                let button;
-                let newStatus;
-                let alertMessage;
-
-                if (status === 'favorite') {
-                    button = document.getElementById('favoriteCardFavoriteButton');
-                    newStatus = button.textContent === '気に入り' ? '気に入り取消' : '気に入り';
-                    alertMessage = newStatus === '気に入り' ? '気に入りに追加されました！' : '気に入り解除されました！';
-                } else if (status === 'memorized') {
-                    button = document.getElementById('favoriteCardMemorizedButton');
-                    newStatus = button.textContent === '知らない' ? '知らない取消' : '知らない';
-                    alertMessage = newStatus === '知らない' ? '知らないリストに追加されました！' : '知らないリストから解除されました！';
-                }
-
-                button.textContent = newStatus;
-                alert(alertMessage);
-            });
-        }
-
-        function loadFavoriteWordForm() {
-            document.getElementById('favoriteCardFlipButton').addEventListener('click', function() {
-                const card = document.getElementById('favoriteCard');
-                card.style.transform = 'rotateY(180deg)';
-            });
-
-            document.getElementById('favoriteCardUnflipButton').addEventListener('click', function() {
-                const card = document.getElementById('favoriteCard');
-                card.style.transform = 'rotateY(0deg)';
-            });
-        }
-        loadFavoriteWordForm();
-    });
-</script>
-
-
 <style>
     button {
         transition: transform 0.1s ease;
@@ -279,12 +87,149 @@
     }
 </style>
 
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        const japaneseElement = document.querySelector("#favoriteCardFront h5");
+        const tagElement = document.querySelector("#favoriteCardFront #tag");
+        const koreanElement = document.querySelector("#favoriteCardFront #korean");
+        const koreanDefinitionElement = document.querySelector("#favoriteCardBack p");
+        const nextButton = document.getElementById("favoriteCardNextButton");
+        const favoriteButton = document.getElementById("favoriteCardFavoriteButton");
+        const memorizedButton = document.getElementById("favoriteCardMemorizedButton");
+
+        let wordId = null;
+
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+
+        try {
+            const response = await fetch("/favorite-word");
+            const data = await response.json();
+            wordId = data.word.id;
+            const statusResponse = await fetch(`/word-status/${wordId}`);
+            const wordStatus = await statusResponse.json();
+
+            if (data) {
+                japaneseElement.textContent = data.word.japanese;
+                tagElement.textContent = data.word.tag.tag_name;
+                koreanElement.textContent = data.word.korean;
+                koreanDefinitionElement.textContent = data.word.korean_definition;
+
+                updateButtonStatus(favoriteButton, "favorite", wordStatus.is_favorite);
+                updateButtonStatus(memorizedButton, "memorized", wordStatus.is_memorized);
+            } else {
+                japaneseElement.textContent = "なし";
+                tagElement.textContent = "";
+                koreanElement.textContent = "";
+                koreanDefinitionElement.textContent = "";
+            }
+        } catch (error) {
+            console.error("There has been a problem with your fetch operation:", error);
+        }
+
+        nextButton.addEventListener("click", async function () {
+            try {
+                const response = await fetch(`/next-favorite-word?wordId=${wordId}`);
+                const data = await response.json();
+
+                if (data) {
+                    wordId = data.id;
+                    const statusResponse = await fetch(`/word-status/${wordId}`);
+                    const wordStatus = await statusResponse.json();
+
+                    japaneseElement.textContent = data.japanese;
+                    tagElement.textContent = data.tag.tag_name;
+                    koreanElement.textContent = data.korean;
+                    koreanDefinitionElement.textContent = data.korean_definition;
+
+                    updateButtonStatus(favoriteButton, "favorite", wordStatus.is_favorite);
+                    updateButtonStatus(memorizedButton, "memorized", wordStatus.is_memorized);
+                } else {
+                    japaneseElement.textContent = "なし";
+                    tagElement.textContent = "";
+                    koreanElement.textContent = "";
+                    koreanDefinitionElement.textContent = "";
+                }
+            } catch (error) {
+                console.error("There has been a problem with your fetch operation:", error);
+            }
+        });
+
+        favoriteButton.addEventListener("click", async function () {
+            await handleButtonClick(favoriteButton, "favorite");
+        });
+
+        memorizedButton.addEventListener("click", async function () {
+            await handleButtonClick(memorizedButton, "memorized");
+        });
+
+        async function handleButtonClick(button, status) {
+            const updatedStatus = await updateWordStatus(wordId, status);
+            const isStatusSet = status === "favorite" ? updatedStatus.is_favorite : updatedStatus.is_memorized;
+
+            updateButtonStatus(button, status, isStatusSet);
+        }
+
+        async function updateWordStatus(wordId, status) {
+            try {
+                const response = await fetch(`/user-words/${wordId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify({ status }),
+                });
+                const data = await response.json();
+
+                return data;
+            } catch (error) {
+                console.error(
+                    "There has been a problem with your fetch operation:",
+                    error
+                );
+            }
+        }
+
+        function updateButtonStatus(button, statusKey, statusValue) {
+            if (statusValue) {
+                button.classList.add('active');
+                statusKey === 'favorite' ? button.textContent = '気に入り削除' : button.textContent = '知っている';
+            } else {
+                button.classList.remove('active');
+                statusKey === 'favorite' ? button.textContent = '気に入り' : button.textContent = '知らない';
+            }
+        }
+
+        function flipCard(cardId, transformValue) {
+            const card = document.getElementById(cardId);
+            card.style.transform = transformValue;
+        }
+
+        function loadFavoriteWordForm() {
+            document
+                .getElementById("favoriteCardFlipButton")
+                .addEventListener("click", () =>
+                    flipCard("favoriteCard", "rotateY(180deg)")
+                );
+            document
+                .getElementById("favoriteCardUnflipButton")
+                .addEventListener("click", () =>
+                    flipCard("favoriteCard", "rotateY(0deg)")
+                );
+        }
+
+        loadFavoriteWordForm();
+    });
+</script>
+
 <section class="favorite-modal-class">
     <header class="favorite-header">
-        <h2 class="text-lg font-medium text-white-900">
+        <h2 class="text-lg font-medium text-white">
             {{ __('お気に入りリスト') }}
         </h2>
-        <p class="mt-1 text-sm text-white-600">
+        <p class="mt-1 text-sm text-white">
             {{ __('気になっていた用語をまとめて見ることができます。') }}
         </p>
     </header>
@@ -296,17 +241,18 @@
                     <div class="p-6 text-gray-900">
                         <!-- Card contents -->
                         <div class="relative mt-6 w-96 rounded-xl overflow-hidden shadow-md">
-                        <div id="favoriteCard" class="relative w-full h-64 transform-gpu transition-transform duration-1000 ease-in-out">
-                            <div id="favoriteCardFront" class="absolute w-full h-full bg-white flex flex-col p-6 items-center justify-center">
-                            <h5 class="mb-2 font-sans text-xl font-semibold text-black text-center"></h5>
-                            <p class="font-sans text-lg font-light text-black text-center"></p>
-                            <button id="favoriteCardFlipButton" class="mt-6 px-4 py-2 bg-pink-500 text-white rounded-lg">詳しく</button>
+                            <div id="favoriteCard" class="relative w-full h-64 transform-gpu transition-transform duration-1000 ease-in-out">
+                                <div id="favoriteCardFront" class="absolute w-full h-full bg-white flex flex-col p-6 items-center justify-center">
+                                    <h5 class="mb-2 font-sans text-xl font-semibold text-black text-center"></h5>
+                                    <p id="tag" class="tag font-sans text-sm font-light text-black text-center"></p>
+                                    <p id="korean" class="font-sans text-lg font-light text-black text-center"></p>
+                                    <button id="favoriteCardFlipButton" class="mt-6 px-4 py-2 bg-pink-500 text-white rounded-lg">詳しく</button>
+                                </div>
+                                <div id="favoriteCardBack" class="absolute w-full h-full bg-white flex flex-col p-6 items-start items-center justify-center justify-between backface-hidden rotate-y-180">
+                                    <p class="favoriteCardBackContent font-sans text-lg font-light text-black text-center"></p>
+                                    <button id="favoriteCardUnflipButton" class="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg">戻り</button>
+                                </div>        
                             </div>
-                            <div id="favoriteCardBack" class="absolute w-full h-full bg-white flex flex-col p-6 items-start items-center justify-center justify-between backface-hidden rotate-y-180">
-                            <p class="favoriteCardBackContent font-sans text-lg font-light text-black text-center"></p>
-                            <button id="favoriteCardUnflipButton" class="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg">戻り</button>
-                            </div>        
-                        </div>
                         </div>
                     </div>
                 </div>
