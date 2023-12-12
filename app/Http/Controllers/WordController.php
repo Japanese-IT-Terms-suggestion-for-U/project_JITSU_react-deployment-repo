@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Word;
 use App\Models\Tag;
+use App\Models\UserTag;
 
 class WordController extends Controller
 {
@@ -17,7 +19,9 @@ class WordController extends Controller
      */
     public function index(): View
     {
-        $word = Word::inRandomOrder()->first();
+        $userTagIds = UserTag::where('user_id', Auth::id())->pluck('tag_id');
+
+        $word = Word::with('tag')->whereIn('tag_id', $userTagIds)->inRandomOrder()->first();
 
         return view('dashboard', ['word' => $word]);
     }
@@ -33,7 +37,7 @@ class WordController extends Controller
             'japanese' => $request->japanese,
             'korean' => $request->korean,
             'korean_definition' => $request->korean_definition,
-            'tag' => $request->tag,
+            'tag_id' => $request->tag_id,
         ]);
 
         $word->save();
@@ -54,7 +58,9 @@ class WordController extends Controller
      */
     public function random(): JsonResponse
     {
-        $word = Word::inRandomOrder()->first();
+        $userTagIds = UserTag::where('user_id', Auth::id())->pluck('tag_id');
+
+        $word = Word::with('tag')->whereIn('tag_id', $userTagIds)->inRandomOrder()->first();
 
         return response()->json($word);
     }

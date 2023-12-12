@@ -13,7 +13,7 @@ class Tag extends Model
      * @var string
      * @access private
      */
-    protected $primaryKey = 'tag_id';
+    protected $primaryKey = 'id';
 
     /**
      * @var bool
@@ -26,4 +26,9 @@ class Tag extends Model
      * @access protected
      */
     protected $fillable = ['tag_name'];
+
+    public function word()
+    {
+        return $this->hasMany(Word::class, 'tag_id');
+    }
 }

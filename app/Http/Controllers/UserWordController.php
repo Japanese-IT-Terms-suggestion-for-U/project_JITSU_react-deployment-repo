@@ -12,38 +12,48 @@ class UserWordController extends Controller
 {
     /**
      * @Route("/favorite-word", name="favorite-words")
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function getFavoriteWord(): View
+    public function getFavoriteWord(): JsonResponse
     {
-        $word = UserWord::where('user_id', auth()->user()->id)
-            ->where('is_favorite', true)
-            ->with('word')
-            ->first();
+        try {
+            $word = UserWord::where('user_id', auth()->user()->id)
+                ->where('is_favorite', true)
+                ->with('word', 'word.tag')
+                ->first();
 
-        if ($word === null) {
-            return view('profile.partials.favorite-word-form', ['error' => '즐겨찾기로 표시된 단어가 없습니다.']);
+            if (!$word) {
+                return response()->json(['error' => '즐겨찾기 단어로 표시된 단어가 없습니다.'], 404);
+            }
+
+            return response()->json($word);
+        } catch (\Exception $e) {
+            // Log error
+            return response()->json(['error' => '데이터 가져오기 중 오류가 발생했습니다.'], 500);
         }
-
-        return response()->json($word);
     }
 
     /**
      * @Route("/unfamiliar-word", name="unfamiliar-words")
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function getUnfamiliarWord(): View
+    public function getUnfamiliarWord(): JsonResponse
     {
-        $word = UserWord::where('user_id', auth()->user()->id)
-            ->where('is_memorized', true)
-            ->with('word')
-            ->first();
+        try {
+            $word = UserWord::where('user_id', auth()->user()->id)
+                ->where('is_memorized', true)
+                ->with('word', 'word.tag')
+                ->first();
 
-        if ($word === null) {
-            return view('profile.partials.unfamiliar-word-form', ['error' => '모르는 단어로 표시된 단어가 없습니다.']);
+            if (!$word) {
+                return response()->json(['error' => '모르는 단어로 표시된 단어가 없습니다.']);
+            }
+
+            return response()->json($word);
+        } catch (\Exception $e) {
+            // Log error
+            return response()->json(['error' => '데이터 가져오기 중 오류가 발생했습니다.'], 500);
         }
-
-        return response()->json($word);
     }
 
     /**
@@ -53,23 +63,28 @@ class UserWordController extends Controller
      */
     public function getNextFavoriteWord(Request $request): JsonResponse
     {
-        $currentWordNumber = $request->input('word_number');
+        $currentWordNumber = $request->input('wordId');
+
+        if (!is_numeric($currentWordNumber)) {
+            return response()->json(['error' => '유효하지 않은 단어 번호입니다.']);
+        }
+
         $nextFavoriteWord = UserWord::where('user_id', auth()->user()->id)
             ->where('is_favorite', true)
             ->where('word_number', '>', $currentWordNumber)
-            ->with('word')
+            ->with(['word', 'word.tag'])
             ->orderBy('word_number')
             ->first();
 
         if (!$nextFavoriteWord) {
             $nextFavoriteWord = UserWord::where('user_id', auth()->user()->id)
                 ->where('is_favorite', true)
-                ->with('word')
+                ->with(['word', 'word.tag'])
                 ->orderBy('word_number')
                 ->first();
         }
 
-        return response()->json($nextFavoriteWord ? $nextFavoriteWord->word : null);
+        return response()->json($nextFavoriteWord->word);
     }
 
     /**
@@ -79,23 +94,23 @@ class UserWordController extends Controller
      */
     public function getNextUnfamiliarWord(Request $request): JsonResponse
     {
-        $currentWordNumber = $request->input('word_number');
+        $currentWordNumber = $request->input('wordId');
         $nextUnfamiliarWord = UserWord::where('user_id', auth()->user()->id)
             ->where('is_memorized', true)
             ->where('word_number', '>', $currentWordNumber)
-            ->with('word')
+            ->with(['word', 'word.tag'])
             ->orderBy('word_number')
             ->first();
 
         if (!$nextUnfamiliarWord) {
             $nextUnfamiliarWord = UserWord::where('user_id', auth()->user()->id)
                 ->where('is_memorized', true)
-                ->with('word')
+                ->with(['word', 'word.tag'])
                 ->orderBy('word_number')
                 ->first();
         }
 
-        return response()->json($nextUnfamiliarWord ? $nextUnfamiliarWord->word : null);
+        return response()->json($nextUnfamiliarWord->word);
     }
 
     /**
@@ -120,14 +135,14 @@ class UserWordController extends Controller
         $userWord = UserWord::firstOrNew(['user_id' => auth()->user()->id, 'word_number' => $word->id], ['is_favorite' => false, 'is_memorized' => false]);
 
         if ($status === 'favorite') {
-            $userWord->is_favorite = true;
+            $userWord->is_favorite = !$userWord->is_favorite;
         } elseif ($status === 'memorized') {
-            $userWord->is_memorized = true;
+            $userWord->is_memorized = !$userWord->is_memorized;
         }
 
         $userWord->save();
 
-        return response()->json($word);
+        return response()->json($userWord);
     }
 
     /**
