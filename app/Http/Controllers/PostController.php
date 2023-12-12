@@ -17,7 +17,7 @@ class PostController extends Controller
         $comment = new Comment();
 
         $post = Post::where('post_id', 1)->firstOrFail();
-        $comments = $comment->where('post_id', 1)->get();
+        $comments = $comment->where('post_id', 1)->orderBy('comment_id', 'asc')->get();
 
         return view('board', compact('post', 'comments'));
     }
