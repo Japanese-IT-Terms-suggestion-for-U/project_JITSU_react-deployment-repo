@@ -53,11 +53,11 @@
 <section class="delete-user-modal-container">
     <div class="delete-user-modal-class rounded-lg shadow">
         <header class="delete-user-header-container">
-            <h2 class="text-lg font-medium text-white-900">
+            <h2 class="text-lg font-medium text-white">
                 {{ __('アカウント削除') }}
             </h2>
 
-            <p class="mt-1 text-sm text-white-600">
+            <p class="mt-1 text-sm text-white">
                 {{ __('アカウントが削除されると、そのリソースとデータはすべて永久に削除されます。アカウントを削除する前に、保持したいデータや情報をダウンロードしてください。') }}
             </p>
         </header>

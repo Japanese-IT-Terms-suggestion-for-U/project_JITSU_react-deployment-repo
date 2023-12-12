@@ -59,11 +59,11 @@
 
 <section class="update-profile-modal-container bg-white rounded-lg shadow">
     <header>
-        <h2 class="text-lg font-medium text-white-900">
+        <h2 class="text-lg font-medium text-white">
             {{ __('プロフィール情報') }}
         </h2>
 
-        <p class="mt-1 text-sm text-white-600">
+        <p class="mt-1 text-sm text-white">
             {{ __("アカウントのプロフィール情報とEメールアドレスを更新します。") }}
         </p>
     </header>
@@ -80,13 +80,13 @@
                     @method('patch')
 
                     <div>
-                        <x-input-label for="name" :value="__('お名前')" />
+                        <x-input-label for="name" :value="__('お名前')" class="text-white" />
                         <x-text-input id="name" name="name" type="text" class="update-profile-input-field mt-1 block w-full" :value="old('name', Auth::user()->name)" required autofocus autocomplete="name" />
                         <x-input-error class="mt-2" :messages="$errors->get('name')" />
                     </div>
 
                     <div>
-                        <x-input-label for="email" :value="__('メール')" />
+                        <x-input-label for="email" :value="__('メール')" class="text-white" />
                         <x-text-input id="email" name="email" type="email" class="update-profile-input-field mt-1 block w-full" :value="old('email', Auth::user()->email)" required autocomplete="username" />
                         <x-input-error class="mt-2" :messages="$errors->get('email')" />
 

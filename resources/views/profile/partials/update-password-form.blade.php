@@ -64,11 +64,11 @@
 
 <section class="password-update-modal-container bg-white rounded-lg shadow">
     <header class="password-update-header-container">
-        <h2 class="text-lg font-medium text-white-900">
+        <h2 class="text-lg font-medium text-white">
             {{ __('パスワードの更新') }}
         </h2>
 
-        <p class="mt-1 text-sm text-white-600">
+        <p class="mt-1 text-sm text-white">
             {{ __('アカウントの安全性を保つために、長くてランダムなパスワードを使用していることを確認してください。') }}
         </p>
     </header>
@@ -79,19 +79,19 @@
             @method('put')
     
             <div>
-                <x-input-label for="current_password" :value="__('現在のパスワード')" />
+                <x-input-label for="current_password" :value="__('現在のパスワード')" class="text-white" />
                 <x-text-input id="current_password" name="current_password" type="password" class="password-update-input-field mt-1 block w-full" autocomplete="current-password" />
                 <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
             </div>
     
             <div>
-                <x-input-label for="password" :value="__('新しいパスワード')" />
+                <x-input-label for="password" :value="__('新しいパスワード')" class="text-white" />
                 <x-text-input id="password" name="password" type="password" class="password-update-input-field mt-1 block w-full" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
             </div>
     
             <div>
-                <x-input-label for="password_confirmation" :value="__('パスワード確認')" />
+                <x-input-label for="password_confirmation" :value="__('パスワード確認')" class="text-white" />
                 <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="password-update-input-field mt-1 block w-full" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
             </div>
