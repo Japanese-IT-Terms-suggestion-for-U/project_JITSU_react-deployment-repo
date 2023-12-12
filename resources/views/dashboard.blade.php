@@ -1,7 +1,10 @@
+{{-- <script src="{{ asset('js/dashboard.js') }}"></script> --}}
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const japaneseElement = document.querySelector("#cardFront h5");
-        const koreanElement = document.querySelector("#cardFront p");
+        const tagElement = document.querySelector("#cardFront #tag");
+        const koreanElement = document.querySelector("#cardFront #korean");
         const koreanDefinitionElement = document.querySelector("#cardBack p");
         const nextButton = document.getElementById('nextButton');
 
@@ -31,9 +34,8 @@
                     japaneseElement.textContent = word.japanese;
                     koreanElement.textContent = word.korean;
                     koreanDefinitionElement.textContent = word.korean_definition;
+                    tagElement.textContent = word.tag.tag_name;
                     wordId = word.id;
-
-                    console.log(word);
 
                     const card = document.getElementById('card');
                     if (card.style.transform === 'rotateY(180deg)') {
