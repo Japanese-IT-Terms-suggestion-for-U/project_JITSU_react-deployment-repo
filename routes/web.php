@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::post('/words', [WordController::class, 'store'])
+    ->middleware('is_admin')
     ->name('words');
 
 Route::middleware('auth')->group(function () {

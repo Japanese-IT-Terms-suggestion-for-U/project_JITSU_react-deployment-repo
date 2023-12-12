@@ -127,7 +127,6 @@ def crawling_translate(jap):
     return kor
     
     driver.quit()      
-                   
 
 # (단어 뜻, 정의 번역 실행 예시 및 실행 시간 측정) ---------------------------------
 
