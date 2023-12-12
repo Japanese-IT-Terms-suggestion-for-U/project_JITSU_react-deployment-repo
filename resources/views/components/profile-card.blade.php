@@ -26,14 +26,11 @@
                 this.show = true;
                 this.updateModal();
             }
-            console.log("openModal called: ", this.show, this.name);
         },
         closeModal() {
-            window.cleanupModalData();
             this.show = false;
             this.updateModal();
             this.name = null;
-            console.log("closeModal called: ", this.show, this.name);
         },
         isModal(name) {
             return this.show && this.name === name;
@@ -47,12 +44,7 @@
     
     document.addEventListener('DOMContentLoaded', function () {
         window.initModalData = function (name, data) {
-            console.log("initModalData is called for " + name);
             window[name] = data;
-        };
-    
-        window.cleanupModalData = function () {
-            console.log("cleanupModalData is called");
         };
     
         window.dispatchModalEvent = function(name, detail = {}) {
