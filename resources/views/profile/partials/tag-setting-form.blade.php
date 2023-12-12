@@ -25,10 +25,22 @@
     fetch('{{ route('profile.tags.get') }}')
       .then(response => response.json())
       .then(tags => {
-        console.log(tags);
         tags.forEach((tagName) => {
           // 체크박스 ID 형식으로 태그 이름 변환
-          const tagId = tagName.toLowerCase().replace(' ', '-');
+          let tagId;
+          switch(tagName) {
+            case 'OS':
+              tagId = 'os';
+              break;
+            case 'データベース':
+              tagId = 'database';
+              break;
+            case 'プログラミング':
+              tagId = 'programming';
+              break;
+            default:
+              tagId = tagName.replace(' ', '-').toLowerCase();
+          }
 
           const checkbox = document.querySelector(`#${tagId}`);
           const label = document.querySelector(`#${tagId}-label`);
@@ -120,11 +132,11 @@
 
 <section class="tag-modal-container bg-white rounded-lg shadow">
   <header class="tag-header-container">
-    <h2 class="text-lg font-medium text-white-900">
+    <h2 class="text-lg font-medium text-white">
         {{ __('タッグ設定') }}
     </h2>
 
-    <p class="mt-1 text-sm text-white-600">
+    <p class="mt-1 text-sm text-white">
         {{ __('学習したい分野を決めることができます。') }}
     </p>
   </header>
@@ -135,18 +147,18 @@
       @method('PATCH')
 
       <div class="tag-checkbox-container">
-        <h3 class="tag-tag-header">Tag List</h3>
+        <h3 class="tag-tag-header text-white">Tag List</h3>
         <div class="tag-checkbox-label">
           <label class="tag-label inline-flex items-center tag-cursor-pointer">
-            <input type="checkbox" id="os" name="tags[]" value="os" class="hidden">
+            <input type="checkbox" id="os" name="tags[]" value="OS" class="hidden">
             <span id="os-label" class="px-4 py-2 bg-blue-500 text-white rounded-lg tag-cursor-pointer">OS</span>
           </label>
           <label class="tag-label inline-flex items-center ml-6 tag-cursor-pointer">
-            <input type="checkbox" id="database" name="tags[]" value="database" class="hidden">
+            <input type="checkbox" id="database" name="tags[]" value="データベース" class="hidden">
             <span id="database-label" class="px-4 py-2 bg-blue-500 text-white rounded-lg tag-cursor-pointer">データベース</span>
           </label>
           <label class="tag-label inline-flex items-center ml-6 tag-cursor-pointer">
-            <input type="checkbox" id="programming" name="tags[]" value="programming" class="hidden">
+            <input type="checkbox" id="programming" name="tags[]" value="プログラミング" class="hidden">
             <span id="programming-label" class="px-4 py-2 bg-blue-500 text-white rounded-lg tag-cursor-pointer">プログラミング</span>
           </label>
         </div>
