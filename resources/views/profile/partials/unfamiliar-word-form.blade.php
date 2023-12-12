@@ -1,89 +1,141 @@
 <script>
-    document.addEventListener("DOMContentLoaded", async function() {
+    document.addEventListener("DOMContentLoaded", async function () {
         const japaneseElement = document.querySelector("#unfamiliarCardFront h5");
-        const koreanElement = document.querySelector("#unfamiliarCardFront p");
+        const tagElement = document.querySelector("#unfamiliarCardFront #tag");
+        const koreanElement = document.querySelector("#unfamiliarCardFront #korean");
         const koreanDefinitionElement = document.querySelector("#unfamiliarCardBack p");
-        const nextButton = document.getElementById('unfamiliarCardNextButton');
-        const favoriteButton = document.getElementById('unfamiliarCardFavoriteButton');
-        const memorizedButton = document.getElementById('unfamiliarCardMemorizedButton');
+        const nextButton = document.getElementById("unfamiliarCardNextButton");
+        const favoriteButton = document.getElementById("unfamiliarCardFavoriteButton");
+        const memorizedButton = document.getElementById("unfamiliarCardMemorizedButton");
 
         let wordId = null;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        const response = await fetch('/unfamiliar-word')
-        const data = await response.json();
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
 
-        console.log(data.word);
-
-        if (data) {
-            japaneseElement.textContent = data.word.japanese;
-            koreanElement.textContent = data.word.korean;
-            koreanDefinitionElement.textContent = data.word.korean_definition;
-            wordId = data.word.id;
-        } else {
-            japaneseElement.textContent = '';
-            koreanElement.textContent = '';
-            koreanDefinitionElement.textContent = '';
-        }
-
-        favoriteButton.addEventListener('click', function() {
-            updateWordStatus(wordId, 'favorite');
-            alert('気に入りに追加されました！');
-        });
-
-        memorizedButton.addEventListener('click', function() {
-            updateWordStatus(wordId, 'memorized');
-            alert('知らないリストに追加されました！');
-        });
-
-        nextButton.addEventListener("click", async function() {
-            const response = await fetch(`/next-unfamiliar-word?word_number=${wordId}`);
+        try {
+            const response = await fetch("/unfamiliar-word");
             const data = await response.json();
+            wordId = data.word.id;
+            const statusResponse = await fetch(`/word-status/${wordId}`);
+            const wordStatus = await statusResponse.json();
 
             if (data) {
-                japaneseElement.textContent = data.japanese;
-                koreanElement.textContent = data.korean;
-                koreanDefinitionElement.textContent = data.korean_definition;
-                wordId = data.id;
+                japaneseElement.textContent = data.word.japanese;
+                tagElement.textContent = data.word.tag.tag_name;
+                koreanElement.textContent = data.word.korean;
+                koreanDefinitionElement.textContent = data.word.korean_definition;
 
-                const card = document.getElementById('unfamiliarCard');
-                card.style.transform = 'rotateY(0deg)';
+                updateButtonStatus(favoriteButton, "favorite", wordStatus.is_favorite);
+                updateButtonStatus(memorizedButton, "memorized", wordStatus.is_memorized);
             } else {
-                japaneseElement.textContent = '';
-                koreanElement.textContent = '';
-                koreanDefinitionElement.textContent = '';
+                japaneseElement.textContent = "なし";
+                tagElement.textContent = "";
+                koreanElement.textContent = "";
+                koreanDefinitionElement.textContent = "";
+            }
+        } catch (error) {
+            console.error("There has been a problem with your fetch operation:", error);
+        }
+
+        nextButton.addEventListener("click", async function () {
+            try {
+                const response = await fetch(`/next-unfamiliar-word?wordId=${wordId}`);
+                const data = await response.json();
+                console.log(data);
+
+                if (data) {
+                    wordId = data.id;
+                    const statusResponse = await fetch(`/word-status/${wordId}`);
+                    const wordStatus = await statusResponse.json();
+
+                    japaneseElement.textContent = data.japanese;
+                    tagElement.textContent = data.tag.tag_name;
+                    koreanElement.textContent = data.korean;
+                    koreanDefinitionElement.textContent = data.korean_definition;
+
+                    updateButtonStatus(favoriteButton, "favorite", wordStatus.is_favorite);
+                    updateButtonStatus(memorizedButton, "memorized", wordStatus.is_memorized);
+                } else {
+                    japaneseElement.textContent = "なし";
+                    tagElement.textContent = "";
+                    koreanElement.textContent = "";
+                    koreanDefinitionElement.textContent = "";
+                }
+            } catch (error) {
+                console.error("There has been a problem with your fetch operation:", error);
             }
         });
 
-        function updateWordStatus(wordId, status) {
-            fetch(`/user-words/${wordId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({ status: status })
-            })
-            .then(response => response.json())
-            .then(data => {
+        favoriteButton.addEventListener("click", async function () {
+            await handleButtonClick(favoriteButton, "favorite");
+        });
+
+        memorizedButton.addEventListener("click", async function () {
+            await handleButtonClick(memorizedButton, "memorized");
+        });
+
+        async function handleButtonClick(button, status) {
+            const updatedStatus = await updateWordStatus(wordId, status);
+            const isStatusSet = status === "favorite" ? updatedStatus.is_favorite : updatedStatus.is_memorized;
+
+            updateButtonStatus(button, status, isStatusSet);
+        }
+
+        async function updateWordStatus(wordId, status) {
+            try {
+                const response = await fetch(`/user-words/${wordId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify({ status }),
+                });
+                const data = await response.json();
+
                 console.log(data);
-            });
+                return data;
+            } catch (error) {
+                console.error(
+                    "There has been a problem with your fetch operation:",
+                    error
+                );
+            }
         }
 
-        function loadUnfamiliarWordForm() {
-            document.getElementById('unfamiliarCardFlipButton').addEventListener('click', function() {
-                const card = document.getElementById('unfamiliarCard');
-                card.style.transform = 'rotateY(180deg)';
-            });
-
-            document.getElementById('unfamiliarCardUnflipButton').addEventListener('click', function() {
-                const card = document.getElementById('unfamiliarCard');
-                card.style.transform = 'rotateY(0deg)';
-            });
+        function updateButtonStatus(button, statusKey, statusValue) {
+            console.log(`Updating button status: ${statusKey}, ${statusValue}`);
+            if (statusValue) {
+                button.classList.add('active');
+                statusKey === 'favorite' ? button.textContent = '気に入り削除' : button.textContent = '知っている';
+            } else {
+                button.classList.remove('active');
+                statusKey === 'favorite' ? button.textContent = '気に入り' : button.textContent = '知らない';
+            }
         }
-        loadUnfamiliarWordForm();
+
+        function flipCard(cardId, transformValue) {
+            const card = document.getElementById(cardId);
+            card.style.transform = transformValue;
+        }
+
+        function loadFavoriteWordForm() {
+            document
+                .getElementById("unfamiliarCardFlipButton")
+                .addEventListener("click", () =>
+                    flipCard("unfamiliarCard", "rotateY(180deg)")
+                );
+            document
+                .getElementById("unfamiliarCardUnflipButton")
+                .addEventListener("click", () =>
+                    flipCard("unfamiliarCard", "rotateY(0deg)")
+                );
+        }
+
+        loadFavoriteWordForm();
     });
-
 </script>
 
 <style>
@@ -177,10 +229,10 @@
 
 <section class="unfamiliar-modal-class">
     <header class="unfamiliar-header">
-        <h2 class="text-lg font-medium text-white-900">
+        <h2 class="text-lg font-medium text-white">
             {{ __('知らないリスト') }}
         </h2>
-        <p class="mt-1 text-sm text-white-600">
+        <p class="mt-1 text-sm text-white">
             {{ __('知らなかった用語をまとめて見ることができます。') }}
         </p>
     </header>
@@ -192,17 +244,18 @@
                     <div class="p-6 text-gray-900">
                         <!-- Card contents -->
                         <div class="relative mt-6 w-96 rounded-xl overflow-hidden shadow-md">
-                        <div id="unfamiliarCard" class="relative w-full h-64 transform-gpu transition-transform duration-1000 ease-in-out">
-                            <div id="unfamiliarCardFront" class="absolute w-full h-full bg-white flex flex-col p-6 items-center justify-center">
-                            <h5 class="mb-2 font-sans text-xl font-semibold text-black text-center"></h5>
-                            <p class="font-sans text-lg font-light text-black text-center"></p>
-                            <button id="unfamiliarCardFlipButton" class="mt-6 px-4 py-2 bg-pink-500 text-white rounded-lg">詳しく</button>
+                            <div id="unfamiliarCard" class="relative w-full h-64 transform-gpu transition-transform duration-1000 ease-in-out">
+                                <div id="unfamiliarCardFront" class="absolute w-full h-full bg-white flex flex-col p-6 items-center justify-center">
+                                    <h5 class="mb-2 font-sans text-xl font-semibold text-black text-center"></h5>
+                                    <p id="tag" class="tag font-sans text-sm font-light text-black text-center"></p>
+                                    <p id="korean" class="font-sans text-lg font-light text-black text-center"></p>
+                                    <button id="unfamiliarCardFlipButton" class="mt-6 px-4 py-2 bg-pink-500 text-white rounded-lg">詳しく</button>
+                                </div>
+                                <div id="unfamiliarCardBack" class="absolute w-full h-full bg-white flex flex-col p-6 items-start items-center justify-center justify-between backface-hidden rotate-y-180">
+                                    <p class="unfamiliarCardBackContent font-sans text-lg font-light text-black text-center"></p>
+                                    <button id="unfamiliarCardUnflipButton" class="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg">戻り</button>
+                                </div>        
                             </div>
-                            <div id="unfamiliarCardBack" class="absolute w-full h-full bg-white flex flex-col p-6 items-start items-center justify-center justify-between backface-hidden rotate-y-180">
-                            <p class="unfamiliarCardBackContent font-sans text-lg font-light text-black text-center"></p>
-                            <button id="unfamiliarCardUnflipButton" class="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg">戻り</button>
-                            </div>        
-                        </div>
                         </div>
                     </div>
                 </div>
