@@ -30,6 +30,14 @@
 <br>
 
 # 4. プロジェクト構造
+
+![github-actions 2cdb6f463c2dceb257a8467aef632381](https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/46d15d16-bd2c-4357-8c7f-dbc925711e35)
+
+---
+<br>
+
+# 5. サービスの流れ
+
 ![스크린샷 2023-11-16 오전 1 45 46](https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/63364f94-8a6b-4dee-adb2-6fabd3bfe38b)
 
 ---
