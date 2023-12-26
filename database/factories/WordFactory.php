@@ -20,11 +20,10 @@ class WordFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'word_number' => $this->faker->unique()->numberBetween(1, 10000),
-            'japanese' => $this->faker->sentence(),
-            'korean' => $this->faker->sentence(),
-            'korean_definition' => $this->faker->sentence(),
-            'tag' => $this->faker->word(),
+            'japanese' => $this->faker->realText(50, 2),
+            'korean' => $this->faker->realText(50, 2),
+            'korean_definition' => $this->faker->realText(100, 2),
+            'tag' => $this->faker->randomElement(['プログラミング', 'データベース', 'OS']),
         ];
     }
 }
