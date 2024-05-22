@@ -13,10 +13,9 @@
 ---
 <br>
 
-# 2. 気にしていたとこ
-1. **SSR**
-2. **Crawling**
-3. **Pipeline**
+# 2. サービス企画
+
+<img width="1393" alt="스크린샷 2024-05-22 23 25 38" src="https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/138a22e6-45eb-4650-bfd0-842ed7b73d16">
 
 ---
 <br>
@@ -29,21 +28,21 @@
 ---
 <br>
 
-# 4. プロジェクト構造
+# 4. サービスの流れ
+
+<img width="919" alt="스크린샷 2024-05-22 23 25 27" src="https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/755a142a-83aa-40ea-9c3b-a55fbf80206f">
+
+---
+<br>
+
+# 5. デプロイアーキテクチャ
 
 ![github-actions 2cdb6f463c2dceb257a8467aef632381](https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/46d15d16-bd2c-4357-8c7f-dbc925711e35)
 
 ---
 <br>
 
-# 5. サービスの流れ
-
-![스크린샷 2023-11-16 오전 1 45 46](https://github.com/yuminn-k/project_JITSU-deployment-repo/assets/55650732/63364f94-8a6b-4dee-adb2-6fabd3bfe38b)
-
----
-<br>
-
-# 5. 技術スタック
+# 6. 技術スタック
 ![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
